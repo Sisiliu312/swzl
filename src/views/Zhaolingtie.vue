@@ -68,20 +68,24 @@
 
                     <div class="tu6"></div>
 
-                    <div class="item1" v-for="tag in tagList" :key="tag.index" v-show="chose2">
+                    <el-select v-model="selectedTag" placeholder="请选择标签">
+                        <el-option
+                        v-for="tag in tagList"
+                        :key="tag.index"
+                        :label="tag.tagName"
+                        :value="tag.tagName">
+                        </el-option>
+                    </el-select>
 
-                        <!-- 点击后出现标签详情 -->
-                        <div class="zi3" @click="toShowTagContent(tag.tagContent)">{{tag.tagName}}</div>
-                        <div class="zi4" @click="toShowTagContent(tag.tagContent)">请选择{{tag.tagName}}</div>
-                        <div class="tu13" @click="toShowTagContent(tag.tagContent)"></div>
-                        
-                        
-                    </div>
+                    <!-- 点击后出现标签详情 -->
 
+                    <div class="zi3" @click="toShowTagContent(selectedTag)">请选择{{selectedTag}}</div>
+
+                  
                     <!-- 选择后改变 -->
                     <div class="choseAfter" v-show="chose2After">
-                        <div class="choseAfter1">{{ message2 }}</div>
-                        <div class="choseAgain" @click="toShowTagContent">(点击更改标签)</div>
+                        <div class="choseAfter1">{{ this.post.tags }}</div>
+                        <div class="choseAgain" @click="resetTag">(点击重置标签)</div>
                     </div>
                     
                 </div>
@@ -216,6 +220,7 @@ export default {
 name: 'zhaolingtie',
 data(){
     return{
+        selectedTag:'',
         categoryOneId: '',
         categoryTwo: {},
         addFileBtnPic:'',
@@ -299,6 +304,10 @@ created(){
     this.post.userId=this.$store.state.userInfo.id
 },
 methods:{
+    resetTag(){
+        this.post.tags=''
+        this.chose2After=false
+    },
     toXinjian:function(){
         this.$router.push('/Xinjian')
     },
@@ -334,7 +343,6 @@ methods:{
         this.choseCategoryAfter=true
     },
     tagOK(){
-        console.log(this.smallTagDetail)
         this.post.tags += this.smallTagDetail+" "
         console.log(this.post.tags)
         this.showTagContent=false,
@@ -396,9 +404,15 @@ methods:{
         this.isZi51=true
     },
     // 物品颜色
-    toShowTagContent(tagContent){
-        var s = tagContent
-        this.tagContent=s.split(',')
+    toShowTagContent(selectedTag){
+        let that = this
+       
+       this.tagList.forEach(function(item){
+            if(item.tagName===selectedTag){
+                var s = item.tagContent
+                that.tagContent=s.split(',')
+            }
+        })
         this.showTagContent=true
     },
 

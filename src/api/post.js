@@ -1,10 +1,11 @@
 import request from "@/request"
 
 
-export function getPosts() {
+export function getPosts(page) {
 	return request({
 		  method: 'get',
-		  url: '/posts'
+		  url: '/posts',
+		  data: page
 		})
 }
 
