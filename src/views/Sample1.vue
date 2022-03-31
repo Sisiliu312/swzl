@@ -17,7 +17,6 @@
           <div class="tu1"></div>
         </div>
         <div class="zi">
-          <!-- <div class="nicheng">匿名</div> -->
           <div class="nicheng">{{this.$store.state.userInfo.username}}</div>
           <div class="time">{{post.created}}</div>
         </div>

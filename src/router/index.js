@@ -57,7 +57,7 @@ const routes=[
   {
 		path:'/login',
     name:'login',
-		component: r=>require.ensure([],()=>r(require('@/views/Login_')),'login')
+		component: r=>require.ensure([],()=>r(require('@/views/Login')),'login')
 	}
 ]
 const router =new VueRouter({

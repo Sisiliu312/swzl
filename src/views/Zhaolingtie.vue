@@ -11,20 +11,22 @@
         <div class="middle">
             <div class="middle1">
                 <div class="zi2">基本信息</div>
+
+                <!-- 物品类别 -->
                 <div class="box1">
                     <div class="tu2"></div>
                     <div class="zi3">物品类别</div>
 
 
-                    <div class="item1"  v-show="chose1">
-                        <div class="zi4" @click="toShow1">请选择物品类别</div>
-                        <div class="tu13" @click="toShow1"></div>
+                    <div class="item1" v-show="chose1" @click="toShowCategoryOne">
+                        <div class="zi4">请选择物品类别</div>
+                        <div class="tu13"></div>
                     </div>
 
                     <!-- 物品类别选择后改变 -->
-                    <div class="choseAfter" v-show="chose1After">
-                        <div class="choseAfter1">{{ categoryFinal.categoryName }}</div>
-                        <div class="choseAgain" @click="toShow1">(点击更改标签)</div>
+                    <div class="choseAfter" v-show="choseCategoryAfter">
+                        <div class="choseAfter1">{{ categoryTwo.categoryName }}</div>
+                        <div class="choseAgain" @click="toShowCategoryOne">(点击更改标签)</div>
                     </div>
 
                 </div>
@@ -60,44 +62,26 @@
             
 
             <div class="middle2">
+
                 <div class="zi2">详细特征</div>
                 <div class="box1" v-show="wupinyanse">
 
-
-
                     <div class="tu6"></div>
 
+                    <div class="item1" v-for="tag in tagList" :key="tag.index" v-show="chose2">
 
-                    <div class="zi3" v-for="tag in tags" :key="tag.index">{{tag.tagName}}</div>
-                    <div class="item1" v-for="tag in tags" :key="tag.index" v-show="chose2">
-                        <div class="zi4">请选择{{tag.tagName}}</div>
-                        <div class="tu13" @click="toShow6(tag.tagContent)"></div>
-
-
-
-                        <!-- 标签详情 -->
-                        <div class="mask" v-show="isShow6">
-                        </div>
-                        <div  class="menu6" v-show="isShow6">
-                            <div class="menu1-top">
-                                <div class="menu1-img" @click="notShow"></div>
-                                <div class="menu1-word">请选择{{tag.tagName}}颜色</div>
-                            </div>
-                            <div class="menu6-middle">
-                                <div v-for="t in tagContent" :key="t.index" @click="tagOK(t)">{{t}}</div>
-                            </div>
-                                <div class="menu1-bottom" @click="Ok2">确定</div>
-                        </div>
+                        <!-- 点击后出现标签详情 -->
+                        <div class="zi3" @click="toShowTagContent(tag.tagContent)">{{tag.tagName}}</div>
+                        <div class="zi4" @click="toShowTagContent(tag.tagContent)">请选择{{tag.tagName}}</div>
+                        <div class="tu13" @click="toShowTagContent(tag.tagContent)"></div>
+                        
+                        
                     </div>
-
-
-
-
 
                     <!-- 选择后改变 -->
                     <div class="choseAfter" v-show="chose2After">
                         <div class="choseAfter1">{{ message2 }}</div>
-                        <div class="choseAgain" @click="toShow6">(点击更改标签)</div>
+                        <div class="choseAgain" @click="toShowTagContent">(点击更改标签)</div>
                     </div>
                     
                 </div>
@@ -144,48 +128,59 @@
             
         </div>
 
-
-
+        <!-- 发布按钮 -->
         <div class="bottom">
             <div v-bind:class="isZi6?'zi6':'zi60'" @click="publish()">发 布</div>
         </div>
 
-        <!-- 覆盖 -->
+
         <!-- 一级类别 -->
-        <div class="mask" v-show="isShow1">
+        <div class="mask" v-show="showCategoryOne">
         </div>
-        <div  class="menu1" v-show="isShow1">
-            <div class="menu1-top">
-                <div class="menu1-img" @click="notShow"></div>
-                <div class="menu1-word">请选择物品类别</div>
+        <div  class="menu1" v-show="showCategoryOne">
+            <div>
+                <el-radio-group v-model="categoryOneId">
+                <el-radio-button style="margin:20px" v-for="category in categoryOneList" :label="category.id" :key="category.index">{{category.categoryName}}</el-radio-button>
+                </el-radio-group>
             </div>
-            <div class="menu1-middle">
-                <div v-for="category in categories" :key="category.index" @click="categoryOK(category)">{{category.categoryName}}</div>
-            </div>
-            <div class="menu1-bottom" @click="toShow(categoryFinal.id)">下一步</div>
+            <div class="menu1-bottom" @click="toShowCategoryTwo(categoryOneId)">下一步</div>
         </div>
 
-
-
-        <!-- 覆盖 -->
         <!-- 二级类别 -->
-        <div class="mask" v-show="isShow3">
+        <div class="mask" v-show="showCategoryTwo">
         </div>
-        <div  class="menu3" v-show="isShow3">
+        <div  class="menu3" v-show="showCategoryTwo">
             <div class="menu1-top">
                 <div class="menu1-img" @click="notShow"></div>
                 <div class="menu1-word">请选择物品类别</div>
             </div>
-            <div class="menu3-middle">
-                <div v-for="category in categories" :key="category.index" @click="categoryTwoOK(category)">{{category.categoryName}}</div>
+            <div>
+                <el-radio-group v-model="categoryTwo">
+                <el-radio-button style="margin:20px" v-for="category in categoryTwoList" :label="category" :key="category.index">{{category.categoryName}}</el-radio-button>
+                </el-radio-group>
             </div>
             <div class="menu2-bottom">
-                <div class="menu2-bottom1" @click="toShow1">上一步</div>
-                <div class="menu2-bottom2" @click="Ok1">确定</div>
+                <div class="menu2-bottom1" @click="toShowCategoryOne">上一步</div>
+                <div class="menu2-bottom2" @click="confirmCategory()">确定</div>
             </div>
         </div>
 
 
+        <!-- 标签详情 -->
+        <div class="mask" v-show="showTagContent">
+        </div>
+        <div  class="menu6" v-show="showTagContent">
+            <div class="menu1-top">
+                <div class="menu1-img" @click="notShow"></div>
+                <div class="menu1-word">请选择</div>
+            </div>
+            <div class="menu6-middle">
+                <el-radio-group v-model="smallTagDetail">
+                    <el-radio-button style="margin:20px" v-for="smallTag in tagContent" :label="smallTag" :key="smallTag.index">{{smallTag}}</el-radio-button>
+                </el-radio-group>
+            </div>
+                <div class="menu1-bottom" @click="tagOK">确定</div>
+        </div>
 
 
 
@@ -216,21 +211,25 @@ import {publish} from '@/api/post.js'
 import {upload} from '@/api/upload.js'
 import {listCategories} from '@/api/category.js'
 import {listTags} from '@/api/tags.js'
+
 export default {
 name: 'zhaolingtie',
 data(){
     return{
+        categoryOneId: '',
+        categoryTwo: {},
         addFileBtnPic:'',
+        smallTagDetail: '',
         post:{
             tags:''
         },
-        categories:[],
-        tags:[],
+        categoryOneList:[],
+        categoryTwoList:[],
+        tagList:[],
         tagContent:[],
-        categoryFinal:{},
         // 物品类别
         chose1:true,
-        chose1After:false,
+        choseCategoryAfter:false,
         message1:"#物品类别",
         // 物品颜色
         wupinyanse:true,
@@ -251,12 +250,12 @@ data(){
 
 
         // 菜单1
-        isShow1:false,
+        showCategoryOne:false,
 
 
 
         //二级标签
-        isShow3:false,
+        showCategoryTwo:false,
 
         
 
@@ -265,7 +264,7 @@ data(){
         isZi51:true,
         isZi52:true,
         // 选择物品颜色
-        isShow6:false,
+        showTagContent:false,
         isMenu6item1:true,
         isMenu6item2:true,
         isMenu6item3:true,
@@ -319,105 +318,63 @@ methods:{
            this.addFileBtnPic = res.data
        })
     },
-    categoryOK(category){
-        this.categoryFinal=category
-    },
-    categoryTwoOK(category){
-        this.post.categoryId=category.id
-        this.categoryFinal=category
-        listTags(parseInt(category.id)).then((res)=>{
-            console.log(res)
-            this.tags=res.data.data
+
+    confirmCategory(){
+        let categoryTwoId=this.categoryTwo.id
+        this.post.categoryId=categoryTwoId
+        
+        listTags(categoryTwoId).then((res)=>{
+            this.tagList=res.data.data
         })
-    },
-    tagOK(tag){
-        this.post.tags+=tag+" "
-    },
-    // 菜单一
-    menu1change1:function(){
-        this.isMenu1item1=!this.isMenu1item1,
-        this.isMenu1item2=true,
-        this.isMenu1item3=true,
-        this.isMenu1item4=true, 
-        this.isMenu1item5=true
-    },
-    menu1change2:function(){
-        this.isMenu1item2=!this.isMenu1item2,
-        this.isMenu1item1=true,
-        this.isMenu1item3=true,
-        this.isMenu1item4=true,
-        this.isMenu1item5=true
-    },
-    menu1change3:function(){
-        this.isMenu1item3=!this.isMenu1item3,
-        this.isMenu1item2=true,
-        this.isMenu1item1=true,
-        this.isMenu1item4=true,
-        this.isMenu1item5=true
-    },
-    menu1change4:function(){
-        this.isMenu1item4=!this.isMenu1item4,
-        this.isMenu1item2=true,
-        this.isMenu1item3=true,
-        this.isMenu1item1=true,
-        this.isMenu1item5=true
-    },
-    menu1change5:function(){
-        this.isMenu1item5=!this.isMenu1item5,
-        this.isMenu1item2=true,
-        this.isMenu1item3=true,
-        this.isMenu1item4=true,
-        this.isMenu1item1=true,
-        this.isShow1=false,
-        this.isShow2=false,
+
+        this.showCategoryTwo=false,
+        this.isShow4=false,
+        this.isShow5=false,
         this.chose1=false,
-        this.chose1After=true,
-        this.message1="#其他物品"
+        this.choseCategoryAfter=true
     },
+    tagOK(){
+        console.log(this.smallTagDetail)
+        this.post.tags += this.smallTagDetail+" "
+        console.log(this.post.tags)
+        this.showTagContent=false,
+        this.chose2=false,
+        this.chose2After=true
+    },
+    
+
+    
     // 切换菜单
-    toShow1(){
+    toShowCategoryOne(){
         listCategories(0).then((res)=>{
-            this.categories=res.data.data
+            this.categoryOneList=res.data.data
         })
-        this.isShow1=true,
-        this.isShow3=false,
-        this.isShow2=false,
+        this.showCategoryOne=true,
+        this.showCategoryTwo=false,
+
         this.isShow4=false,
         this.isShow5=false
     },
-    toShow(id){
-        console.log(id)
+    toShowCategoryTwo(id){
         listCategories(id).then((res)=>{
-            this.categories=res.data.data
+            this.categoryTwoList=res.data.data
         })
-        this.isShow3=true;
+        this.showCategoryTwo=true;
+        this.showCategoryOne=false;
     },
     notShow:function(){
-        this.isShow1=false
-        this.isShow2=false
-        this.isShow3=false
+
+
+        this.showCategoryTwo=false
         this.isShow4=false
         this.isShow5=false
-        this.isShow6=false
+        this.showTagContent=false
         this.isShow7=false
         this.isShow71=false
         this.isShow72=false
         this.isShow73=false
     },
-    Ok1:function(){
-        this.isShow1=false,
-        this.isShow3=false,
-        this.isShow2=false,
-        this.isShow4=false,
-        this.isShow5=false,
-        this.chose1=false,
-        this.chose1After=true
-    },
-    Ok2:function(){
-        this.isShow6=false,
-        this.chose2=false,
-        this.chose2After=true
-    },
+
     Ok3:function(){
         this.isShow7=false,
         this.isShow71=false,
@@ -426,21 +383,6 @@ methods:{
         this.chose3=false,
         this.chose3After=true
     },
-    // 卡或证件
-    menu3change1:function(){
-        this.isMenu3item1=!this.isMenu3item1,
-        this.isMenu3item2=true,
-        this.isMenu3item3=true,
-        this.isMenu3item4=true,
-        this.isMenu3item5=true,
-        this.isMenu3item6=true,
-        this.isMenu3item7=true,
-        this.isMenu3item8=true,
-        this.isMenu3item9=true,
-        this.message1="#校园卡"
-    },
-    
-
 
     // 切换校区
     zi5change1:function(){
@@ -454,142 +396,13 @@ methods:{
         this.isZi51=true
     },
     // 物品颜色
-    toShow6(tagContent){
-        var s = tagContent+''
+    toShowTagContent(tagContent){
+        var s = tagContent
         this.tagContent=s.split(',')
-        console.log(this.tagContent)
-        this.isShow6=true
+        this.showTagContent=true
     },
-    menu6change1:function(){
-        this.isMenu6item1=!this.isMenu6item1,
-        this.isMenu6item2=true,
-        this.isMenu6item3=true,
-        this.isMenu6item4=true,
-        this.isMenu6item5=true,
-        this.isMenu6item6=true,
-        this.isMenu6item7=true,
-        this.isMenu6item8=true,
-        this.isMenu6item9=true,
-        this.isMenu6item10=true,
-        this.message2="#红色"
-    },
-    menu6change2:function(){
-        this.isMenu6item2=!this.isMenu6item2,
-        this.isMenu6item1=true,
-        this.isMenu6item3=true,
-        this.isMenu6item4=true,
-        this.isMenu6item5=true,
-        this.isMenu6item6=true,
-        this.isMenu6item7=true,
-        this.isMenu6item8=true,
-        this.isMenu6item9=true,
-        this.isMenu6item10=true,
-        this.message2="#紫色"
-    },
-    menu6change3:function(){
-        this.isMenu6item3=!this.isMenu6item3,
-        this.isMenu6item2=true,
-        this.isMenu6item1=true,
-        this.isMenu6item4=true,
-        this.isMenu6item5=true,
-        this.isMenu6item6=true,
-        this.isMenu6item7=true,
-        this.isMenu6item8=true,
-        this.isMenu6item9=true,
-        this.isMenu6item10=true,
-        this.message2="#橙色"
-    },
-    menu6change4:function(){
-        this.isMenu6item4=!this.isMenu6item4,
-        this.isMenu6item2=true,
-        this.isMenu6item3=true,
-        this.isMenu6item1=true,
-        this.isMenu6item5=true,
-        this.isMenu6item6=true,
-        this.isMenu6item7=true,
-        this.isMenu6item8=true,
-        this.isMenu6item9=true,
-        this.isMenu6item10=true,
-        this.message2="#黑色"
-    },
-    menu6change5:function(){
-        this.isMenu6item5=!this.isMenu6item5,
-        this.isMenu6item2=true,
-        this.isMenu6item3=true,
-        this.isMenu6item4=true,
-        this.isMenu6item1=true,
-        this.isMenu6item6=true,
-        this.isMenu6item7=true,
-        this.isMenu6item8=true,
-        this.isMenu6item9=true,
-        this.isMenu6item10=true,
-        this.message2="#黄色"
-    },
-    menu6change6:function(){
-        this.isMenu6item6=!this.isMenu6item6,
-        this.isMenu6item2=true,
-        this.isMenu6item3=true,
-        this.isMenu6item4=true,
-        this.isMenu6item5=true,
-        this.isMenu6item1=true,
-        this.isMenu6item7=true,
-        this.isMenu6item8=true,
-        this.isMenu6item9=true,
-        this.isMenu6item10=true,
-        this.message2="#白色"
-    },
-    menu6change7:function(){
-        this.isMenu6item7=!this.isMenu6item7,
-        this.isMenu6item2=true,
-        this.isMenu6item3=true,
-        this.isMenu6item4=true,
-        this.isMenu6item5=true,
-        this.isMenu6item6=true,
-        this.isMenu6item1=true,
-        this.isMenu6item8=true,
-        this.isMenu6item9=true,
-        this.isMenu6item10=true,
-        this.message2="#绿色"
-    },
-    menu6change8:function(){
-        this.isMenu6item8=!this.isMenu6item8,
-        this.isMenu6item2=true,
-        this.isMenu6item3=true,
-        this.isMenu6item4=true,
-        this.isMenu6item5=true,
-        this.isMenu6item6=true,
-        this.isMenu6item7=true,
-        this.isMenu6item1=true,
-        this.isMenu6item9=true,
-        this.isMenu6item10=true,
-        this.message2="#灰色"
-    },
-    menu6change9:function(){
-        this.isMenu6item9=!this.isMenu6item9,
-        this.isMenu6item2=true,
-        this.isMenu6item3=true,
-        this.isMenu6item4=true,
-        this.isMenu6item5=true,
-        this.isMenu6item6=true,
-        this.isMenu6item7=true,
-        this.isMenu6item8=true,
-        this.isMenu6item1=true,
-        this.isMenu6item10=true,
-        this.message2="#蓝色"
-    },
-    menu6change10:function(){
-        this.isMenu6item10=!this.isMenu6item10,
-        this.isMenu6item2=true,
-        this.isMenu6item3=true,
-        this.isMenu6item4=true,
-        this.isMenu6item5=true,
-        this.isMenu6item6=true,
-        this.isMenu6item7=true,
-        this.isMenu6item8=true,
-        this.isMenu6item9=true,
-        this.isMenu6item1=true,
-        this.message2="#其他"
-    },
+
+
     //物品品牌笔记本
     toShow7:function(){
         if(this.isMenu2item1==false){
