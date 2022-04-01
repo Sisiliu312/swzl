@@ -51,12 +51,15 @@
       <div class="mask" v-show="isShowCategory" @click="notShowCategory"></div>
       <div class="menu2" v-show="isShowCategory">
         <div class="box1">
-          <div
-            v-for="category in categories"
-            :key="category.index"
-            @click="checkCategory(category.id)"
-          >
-            <div>{{ category.categoryName }}</div>
+          <div>
+            <el-radio-group v-model="categoryId" @change="checkCategory()">
+              <el-radio-button
+                v-for="category in categories"
+                :label="category.id"
+                :key="category.index"
+                >{{ category.categoryName }}</el-radio-button
+              >
+            </el-radio-group>
           </div>
         </div>
       </div>
@@ -65,7 +68,7 @@
       <div class="mask" v-show="isShowDate" @click="notShowDate"></div>
       <div class="menu2" v-show="isShowDate">
         <div id="l_menu3">
-          <div>{{ month }}月</div>
+          <div>{{ date1.get("month") + 1 }}月</div>
           <div>
             <div
               class="first_time"
@@ -82,7 +85,7 @@
             <div
               class="other_time"
               :style="{ borderLeft: `solid ${date6 == 1 ? 1 : 0}px black` }"
-              @click="timeClick(6)"
+              @click="timeClick(date6)"
             >
               <div
                 :style="{
@@ -94,7 +97,7 @@
                 <div
                   :style="{ color: `${time_choice == 6 ? 'white' : 'black'}` }"
                 >
-                  {{ date6 }}
+                  {{ date6.get("date") }}
                 </div>
                 <div
                   :style="{
@@ -108,7 +111,7 @@
             <div
               class="other_time"
               :style="{ borderLeft: `solid ${date5 == 1 ? 1 : 0}px black` }"
-              @click="timeClick(5)"
+              @click="timeClick(date5)"
             >
               <div
                 :style="{
@@ -120,7 +123,7 @@
                 <div
                   :style="{ color: `${time_choice == 5 ? 'white' : 'black'}` }"
                 >
-                  {{ date5 }}
+                  {{ date5.get("date") }}
                 </div>
                 <div
                   :style="{
@@ -134,7 +137,7 @@
             <div
               class="other_time"
               :style="{ borderLeft: `solid ${date4 == 1 ? 1 : 0}px black` }"
-              @click="timeClick(4)"
+              @click="timeClick(date4)"
             >
               <div
                 :style="{
@@ -146,7 +149,7 @@
                 <div
                   :style="{ color: `${time_choice == 4 ? 'white' : 'black'}` }"
                 >
-                  {{ date4 }}
+                  {{ date4.get("date") }}
                 </div>
                 <div
                   :style="{
@@ -160,7 +163,7 @@
             <div
               class="other_time"
               :style="{ borderLeft: `solid ${date3 == 1 ? 1 : 0}px black` }"
-              @click="timeClick(3)"
+              @click="timeClick(date3)"
             >
               <div
                 :style="{
@@ -172,7 +175,7 @@
                 <div
                   :style="{ color: `${time_choice == 3 ? 'white' : 'black'}` }"
                 >
-                  {{ date3 }}
+                  {{ date3.get("date") }}
                 </div>
                 <div
                   :style="{
@@ -186,7 +189,7 @@
             <div
               class="other_time"
               :style="{ borderLeft: `solid ${date2 == 1 ? 1 : 0}px black` }"
-              @click="timeClick(2)"
+              @click="timeClick(date2)"
             >
               <div
                 :style="{
@@ -198,7 +201,7 @@
                 <div
                   :style="{ color: `${time_choice == 2 ? 'white' : 'black'}` }"
                 >
-                  {{ date2 }}
+                  {{ date2.get("date") }}
                 </div>
                 <div
                   :style="{
@@ -212,7 +215,7 @@
             <div
               class="other_time"
               :style="{ borderLeft: `solid ${date1 == 1 ? 1 : 0}px black` }"
-              @click="timeClick(1)"
+              @click="timeClick(date1)"
             >
               <div
                 :style="{
@@ -224,7 +227,7 @@
                 <div
                   :style="{ color: `${time_choice == 1 ? 'white' : 'black'}` }"
                 >
-                  {{ date1 }}
+                  {{ date1.get("date") }}
                 </div>
                 <div
                   :style="{
@@ -271,8 +274,6 @@ export default {
       day4: "",
       day5: "",
       day6: "",
-      month: "",
-      year: "",
 
       // 校区、种类、日期旁边的箭头
       campusArrow: true,
@@ -296,59 +297,34 @@ export default {
   },
   created() {
     // 页面创建时获取时间
-    var now = new Date();
-    this.year = now.getFullYear();
-    this.month = now.getMonth() + 1;
+    this.date1 = this.$moment();
+    this.date2 = this.$moment().subtract(1, "days");
+    this.date3 = this.$moment().subtract(2, "days");
+    this.date4 = this.$moment().subtract(3, "days");
+    this.date5 = this.$moment().subtract(4, "days");
+    this.date6 = this.$moment().subtract(5, "days");
 
-    this.date1 = now.getDate();
-    now.setDate(now.getDate() - 1);
-    this.date2 = now.getDate();
-    now.setDate(now.getDate() - 1);
-    this.date3 = now.getDate();
-    now.setDate(now.getDate() - 1);
-    this.date4 = now.getDate();
-    now.setDate(now.getDate() - 1);
-    this.date5 = now.getDate();
-    now.setDate(now.getDate() - 1);
-    this.date6 = now.getDate();
-
-    // 使日期回到今天
-    now.setDate(now.getDate() - 1);
-    now.setDate(now.getDate() - 1);
-
-    // 页面创建时获取今天是周几
-    this.day1 = now.getDay();
-    now.setDate(now.getDate() - 1);
-    this.day2 = now.getDay();
-    now.setDate(now.getDate() - 1);
-    this.day3 = now.getDay();
-    now.setDate(now.getDate() - 1);
-    this.day4 = now.getDay();
-    now.setDate(now.getDate() - 1);
-    this.day5 = now.getDay();
-    now.setDate(now.getDate() - 1);
-    this.day6 = now.getDay();
+    this.day1 = this.date1.get("day");
+    this.day2 = this.date2.get("day");
+    this.day3 = this.date3.get("day");
+    this.day4 = this.date4.get("day");
+    this.day5 = this.date5.get("day");
+    this.day6 = this.date6.get("day");
   },
   methods: {
     // 更换日期
-    timeClick(which) {
-      this.time_choice = which;
-      if (which == 7) {
+    timeClick(date) {
+      this.time_choice = this.which;
+      if (date === 7) {
         this.$store.commit("SET_DATE", "before");
       } else {
-        let finalDate = `${this.year}-${
-          this.month >= 10 ? this.month : "0" + this.month
-        }-${
-          this["date" + which] >= 10
-            ? this["date" + which]
-            : "0" + this["date" + which]
-        }`;
-        this.$store.commit("SET_DATE", finalDate);
+        this.$store.commit("SET_DATE", date.format("yyyy-MM-DD"));
       }
     },
     //更换种类id
-    checkCategory(id) {
-      this.$store.commit("SET_CATEGORYID", id);
+    checkCategory() {
+      console.log(this.categoryId);
+      this.$store.commit("SET_CATEGORYID", this.categoryId);
     },
     // 更换校区
     checkCampus(campus) {

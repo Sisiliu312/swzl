@@ -6,14 +6,14 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-
+import Moment from 'moment';
 
 Vue.config.productionTip = false
 
 
 Vue.use(VueAxios, axios)
 Vue.use(ElementUI)
-
+Vue.prototype.$moment = Moment;
 
 Vue.directive('title',  function (el, binding) {
   document.title = el.dataset.title
