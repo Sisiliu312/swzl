@@ -230,7 +230,7 @@ body {
   height: 100%;
   width: 100%;
 }
-
+/* 页面中心 */
 .post-list {
   margin: 0;
   height: 100vh;
@@ -241,6 +241,7 @@ body {
   align-items: center;
   background-color: rgb(224, 245, 246);
 }
+/* 滚动加载组件 */
 .infinite-list-wrapper {
   margin-top: 0px;
   width: 100%;
@@ -263,12 +264,14 @@ body {
   margin-bottom: 70px;
   text-align: center;
 }
+/* 每一个帖子盒子 */
 .list li .box {
   height: 18vh;
   width: 100%;
   display: flex;
   background-color: rgb(255, 255, 255);
 }
+/* 标签样式 */
 .content .tag{
   display: flex;
 }
