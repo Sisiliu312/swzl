@@ -1,383 +1,433 @@
 <template>
-<body>
-  <div id="total">
-    <!-- 顶部栏 -->
-    <div class="top"></div>
+  <body>
+    <div id="total">
+      <div class="top"></div>
 
+      <!-- 校区 类别 日期  header -->
+      <div class="content">
+        <div :class="isCheckedCampus ? 'box' : 'box0'" @click="showCampus">
+          <div class="zi">校区</div>
+          <div class="tu">
+            <div class="tu1"></div>
+            <div :class="campusArrow ? 'reversedTriangle' : 'triangle'"></div>
+          </div>
+        </div>
 
-    <div class="content">
+        <div :class="isCheckedCategory ? 'box' : 'box0'" @click="showCategory">
+          <div class="zi">类别</div>
+          <div class="tu">
+            <div class="tu1"></div>
+            <div :class="categoryArrow ? 'reversedTriangle' : 'triangle'"></div>
+          </div>
+        </div>
 
-
-      <div v-bind:class="isBox1?'box':'box0'" @click="toShow1">
-        <div class="zi">校区</div>
-        <div class="tu">
-          <div class="tu1"></div>
-          <div v-bind:class="isTu21?'tu2':'tu3'"></div>
+        <div :class="isCheckedDate ? 'box' : 'box0'" @click="showDate">
+          <div class="zi">时间</div>
+          <div class="tu">
+            <div class="tu1"></div>
+            <div :class="dateArrow ? 'reversedTriangle' : 'triangle'"></div>
+          </div>
         </div>
       </div>
 
-
-
-      <div v-bind:class="isBox2?'box':'box0'" @click="toShow2">
-        <div class="zi">类别</div>
-        <div class="tu">
-          <div class="tu1"></div>
-          <div v-bind:class="isTu22?'tu2':'tu3'"></div>
+      <!-- 校区 -->
+      <div class="mask" v-show="isShowCampus" @click="notShowCampus"></div>
+      <div class="menu1" v-show="isShowCampus">
+        <div
+          :class="checkedBei ? 'backgroud-white' : 'backgroud-green'"
+          @click="checkBei"
+        >
+          <div :class="checkedBei ? 'word-green' : 'word-white'">北洋园</div>
+        </div>
+        <div
+          :class="checkedWei ? 'backgroud-white' : 'backgroud-green'"
+          @click="checkWei"
+        >
+          <div :class="checkedWei ? 'word-green' : 'word-white'">卫津路</div>
         </div>
       </div>
 
+      <!-- 种类 -->
+      <div class="mask" v-show="isShowCategory" @click="notShowCategory"></div>
+      <div class="menu2" v-show="isShowCategory">
+        <div class="box1">
+          <div
+            v-for="category in categories"
+            :key="category.index"
+            @click="checkCategory(category.id)"
+          >
+            <div>{{ category.categoryName }}</div>
+          </div>
+        </div>
+      </div>
 
-
-      <div v-bind:class="isBox3?'box':'box0'" @click="toShow3">
-        <div class="zi">时间</div>
-        <div class="tu">
-          <div class="tu1"></div>
-          <div v-bind:class="isTu23?'tu2':'tu3'"></div>
+      <!-- 日期 -->
+      <div class="mask" v-show="isShowDate" @click="notShowDate"></div>
+      <div class="menu2" v-show="isShowDate">
+        <div id="l_menu3">
+          <div>{{ month }}月</div>
+          <div>
+            <div
+              class="first_time"
+              :style="{
+                backgroundColor: `${time_choice == 7 ? 'rgb(88,151,136)' : ''}`,
+              }"
+              @click="timeClick(7)"
+            >
+              <span
+                :style="{ color: `${time_choice == 7 ? 'white' : 'black'}` }"
+                >更早</span
+              >
+            </div>
+            <div
+              class="other_time"
+              :style="{ borderLeft: `solid ${date6 == 1 ? 1 : 0}px black` }"
+              @click="timeClick(6)"
+            >
+              <div
+                :style="{
+                  backgroundColor: `${
+                    time_choice == 6 ? 'rgb(88,151,136)' : ''
+                  }`,
+                }"
+              >
+                <div
+                  :style="{ color: `${time_choice == 6 ? 'white' : 'black'}` }"
+                >
+                  {{ date6 }}
+                </div>
+                <div
+                  :style="{
+                    color: `${time_choice == 6 ? 'white' : 'rgb(120,120,120)'}`,
+                  }"
+                >
+                  {{ day6 | formatDay }}
+                </div>
+              </div>
+            </div>
+            <div
+              class="other_time"
+              :style="{ borderLeft: `solid ${date5 == 1 ? 1 : 0}px black` }"
+              @click="timeClick(5)"
+            >
+              <div
+                :style="{
+                  backgroundColor: `${
+                    time_choice == 5 ? 'rgb(88,151,136)' : ''
+                  }`,
+                }"
+              >
+                <div
+                  :style="{ color: `${time_choice == 5 ? 'white' : 'black'}` }"
+                >
+                  {{ date5 }}
+                </div>
+                <div
+                  :style="{
+                    color: `${time_choice == 5 ? 'white' : 'rgb(120,120,120)'}`,
+                  }"
+                >
+                  {{ day5 | formatDay }}
+                </div>
+              </div>
+            </div>
+            <div
+              class="other_time"
+              :style="{ borderLeft: `solid ${date4 == 1 ? 1 : 0}px black` }"
+              @click="timeClick(4)"
+            >
+              <div
+                :style="{
+                  backgroundColor: `${
+                    time_choice == 4 ? 'rgb(88,151,136)' : ''
+                  }`,
+                }"
+              >
+                <div
+                  :style="{ color: `${time_choice == 4 ? 'white' : 'black'}` }"
+                >
+                  {{ date4 }}
+                </div>
+                <div
+                  :style="{
+                    color: `${time_choice == 4 ? 'white' : 'rgb(120,120,120)'}`,
+                  }"
+                >
+                  {{ day4 | formatDay }}
+                </div>
+              </div>
+            </div>
+            <div
+              class="other_time"
+              :style="{ borderLeft: `solid ${date3 == 1 ? 1 : 0}px black` }"
+              @click="timeClick(3)"
+            >
+              <div
+                :style="{
+                  backgroundColor: `${
+                    time_choice == 3 ? 'rgb(88,151,136)' : ''
+                  }`,
+                }"
+              >
+                <div
+                  :style="{ color: `${time_choice == 3 ? 'white' : 'black'}` }"
+                >
+                  {{ date3 }}
+                </div>
+                <div
+                  :style="{
+                    color: `${time_choice == 3 ? 'white' : 'rgb(120,120,120)'}`,
+                  }"
+                >
+                  {{ day3 | formatDay }}
+                </div>
+              </div>
+            </div>
+            <div
+              class="other_time"
+              :style="{ borderLeft: `solid ${date2 == 1 ? 1 : 0}px black` }"
+              @click="timeClick(2)"
+            >
+              <div
+                :style="{
+                  backgroundColor: `${
+                    time_choice == 2 ? 'rgb(88,151,136)' : ''
+                  }`,
+                }"
+              >
+                <div
+                  :style="{ color: `${time_choice == 2 ? 'white' : 'black'}` }"
+                >
+                  {{ date2 }}
+                </div>
+                <div
+                  :style="{
+                    color: `${time_choice == 2 ? 'white' : 'rgb(120,120,120)'}`,
+                  }"
+                >
+                  {{ day2 | formatDay }}
+                </div>
+              </div>
+            </div>
+            <div
+              class="other_time"
+              :style="{ borderLeft: `solid ${date1 == 1 ? 1 : 0}px black` }"
+              @click="timeClick(1)"
+            >
+              <div
+                :style="{
+                  backgroundColor: `${
+                    time_choice == 1 ? 'rgb(88,151,136)' : ''
+                  }`,
+                }"
+              >
+                <div
+                  :style="{ color: `${time_choice == 1 ? 'white' : 'black'}` }"
+                >
+                  {{ date1 }}
+                </div>
+                <div
+                  :style="{
+                    color: `${time_choice == 1 ? 'white' : 'rgb(120,120,120)'}`,
+                  }"
+                >
+                  {{ day1 | formatDay }}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-
-
-
-    <!-- 菜单1 -->
-    <div class="mask" v-show="isShow1" @click="notShow1">
-    </div>
-    <div class="menu1" v-show="isShow1">
-      <div v-bind:class="isZi11?'zi1':'zi10'" @click="change1">
-        <div v-bind:class="isZi21?'zi2':'zi20'" >北洋园</div>
-      </div>
-      <div v-bind:class="isZi12?'zi1':'zi10'" @click="change2">
-        <div v-bind:class="isZi22?'zi2':'zi20'">卫津路</div>
-      </div>
-    </div>
-
-    <!-- 菜单2 -->
-    <div class="mask" v-show="isShow2" @click="notShow2">
-    </div>
-    <div class="menu2" v-show="isShow2" >
-      <div class="box1">
-        <div v-for="category in categories" :key="category.index" @click="checkCategory(category.id)">
-          <div>{{category.categoryName}}</div>
-        </div>
-      </div>
-    </div>
-
-
-
-    <!-- 菜单3 -->
-    <div class="mask" v-show="isShow3" @click="notShow3">
-    </div>
-    <div class="menu2" v-show="isShow3" >
-      <div id="l_menu3">
-        <div>
-          {{month}}月
-       </div>
-       <div>
-          <div class="first_time" :style="{backgroundColor:`${time_choice==7?'rgb(88,151,136)':''}`}" @click="timeClick(7)">
-            <span :style="{color:`${time_choice==7?'white':'black'}`}">更早</span>
-          </div>
-          <div class="other_time" :style="{borderLeft:`solid ${date6==1 ? 1:0}px black`}" @click="timeClick(6)">
-            <div :style="{backgroundColor:`${time_choice==6?'rgb(88,151,136)':''}`}">
-              <div :style="{color:`${time_choice==6?'white':'black'}`}">{{date6}}</div>
-              <div :style="{color:`${time_choice==6?'white':'rgb(120,120,120)'}`}">{{day6 | formatDay}}</div>
-            </div>
-          </div>
-          <div class="other_time" :style="{borderLeft:`solid ${date5==1 ? 1:0}px black`}" @click="timeClick(5)">
-            <div :style="{backgroundColor:`${time_choice==5?'rgb(88,151,136)':''}`}">
-              <div :style="{color:`${time_choice==5?'white':'black'}`}">{{date5}}</div>
-              <div :style="{color:`${time_choice==5?'white':'rgb(120,120,120)'}`}">{{day5 | formatDay}}</div>
-            </div>
-          </div>
-          <div class="other_time" :style="{borderLeft:`solid ${date4==1 ? 1:0}px black`}" @click="timeClick(4)">
-            <div :style="{backgroundColor:`${time_choice==4?'rgb(88,151,136)':''}`}">
-              <div :style="{color:`${time_choice==4?'white':'black'}`}">{{date4}}</div>
-              <div :style="{color:`${time_choice==4?'white':'rgb(120,120,120)'}`}">{{day4 | formatDay}}</div>
-            </div>
-          </div>
-          <div class="other_time" :style="{borderLeft:`solid ${date3==1 ? 1:0}px black`}" @click="timeClick(3)">
-            <div :style="{backgroundColor:`${time_choice==3?'rgb(88,151,136)':''}`}">
-              <div :style="{color:`${time_choice==3?'white':'black'}`}">{{date3}}</div>
-              <div :style="{color:`${time_choice==3?'white':'rgb(120,120,120)'}`}">{{day3 | formatDay}}</div>
-            </div>
-          </div>
-          <div class="other_time" :style="{borderLeft:`solid ${date2==1 ? 1:0}px black`}" @click="timeClick(2)">
-            <div :style="{backgroundColor:`${time_choice==2?'rgb(88,151,136)':''}`}">
-              <div :style="{color:`${time_choice==2?'white':'black'}`}">{{date2}}</div>
-              <div :style="{color:`${time_choice==2?'white':'rgb(120,120,120)'}`}">{{day2 | formatDay}}</div>
-            </div>
-          </div>
-          <div class="other_time" :style="{borderLeft:`solid ${date1==1 ? 1:0}px black`}" @click="timeClick(1)">
-            <div :style="{backgroundColor:`${time_choice==1?'rgb(88,151,136)':''}`}">
-              <div :style="{color:`${time_choice==1?'white':'black'}`}">{{date1}}</div>
-              <div :style="{color:`${time_choice==1?'white':'rgb(120,120,120)'}`}">{{day1 | formatDay}}</div>
-            </div>
-          </div>
-       </div>
-      </div>
-    </div>
-
-  </div>
-</body>
+  </body>
 </template>
 
 <script>
-
-import {listCategories} from '@/api/category.js'
+import { listCategories } from "@/api/category.js";
 
 export default {
-  name: 'top',
-  data(){
-    return{
-    categoryId:'',
-    categories:[],
+  name: "top",
+  data() {
+    return {
+      // 选择的种类id
+      categoryId: "",
+      //查询到的种类
+      categories: [],
 
-    time_choice:1,
-    date1:'',
-    date2:'',
-    date3:'',
-    date4:'',
-    date5:'',
-    date6:'',
+      // 选择的第几个日期
+      time_choice: 1,
 
-    day1:'',
-    day2:'',
-    day3:'',
-    day4:'',
-    day5:'',
-    day6:'',
-    month:'',
-    year:'',
-    
-    isTu21:true,
-    isTu22:true,
-    isTu23:true,
+      // 日期
+      date1: "",
+      date2: "",
+      date3: "",
+      date4: "",
+      date5: "",
+      date6: "",
+      // 周几
+      day1: "",
+      day2: "",
+      day3: "",
+      day4: "",
+      day5: "",
+      day6: "",
+      month: "",
+      year: "",
 
-    isShow1:false,
-    isShow2:false,
-    isShow3:false,
+      // 校区、种类、日期旁边的箭头
+      campusArrow: true,
+      categoryArrow: true,
+      dateArrow: true,
 
-    isBox1:true,
-    isBox2:true,
-    isBox3:true,
+      // 是否展示校区 种类 日期的选择
+      isShowCampus: false,
+      isShowCategory: false,
+      isShowDate: false,
 
+      // 校区 种类 日期 是否被选中
+      isCheckedCampus: true,
+      isCheckedCategory: true,
+      isCheckedDate: true,
 
-    isZi11:true,
-    isZi12:true,
-    isZi13:true,
-    isZi14:true,
-    isZi15:true,
-    isZi16:true,
-    isZi17:true,
-
-
-    isZi21:true,
-    isZi22:true,
-
-
-    isZi31:true,
-    isZi32:true,
-    isZi33:true,
-    isZi34:true,
-    isZi35:true
-
-    }
+      // 北洋园和卫津路是否被选中
+      checkedBei: true,
+      checkedWei: true,
+    };
   },
-  created(){
-    var now = new Date()
-    this.year=now.getFullYear()
-    this.month=now.getMonth()+1
+  created() {
+    // 页面创建时获取时间
+    var now = new Date();
+    this.year = now.getFullYear();
+    this.month = now.getMonth() + 1;
 
+    this.date1 = now.getDate();
+    now.setDate(now.getDate() - 1);
+    this.date2 = now.getDate();
+    now.setDate(now.getDate() - 1);
+    this.date3 = now.getDate();
+    now.setDate(now.getDate() - 1);
+    this.date4 = now.getDate();
+    now.setDate(now.getDate() - 1);
+    this.date5 = now.getDate();
+    now.setDate(now.getDate() - 1);
+    this.date6 = now.getDate();
 
-    this.date1=now.getDate()
+    // 使日期回到今天
+    now.setDate(now.getDate() - 1);
+    now.setDate(now.getDate() - 1);
 
-
-    now.setDate(now.getDate() - 1);
-    this.date2=now.getDate()
-    now.setDate(now.getDate() - 1);
-    this.date3=now.getDate()
-    now.setDate(now.getDate() - 1);
-    this.date4=now.getDate()
-    now.setDate(now.getDate() - 1);
-    this.date5=now.getDate()
-    now.setDate(now.getDate() - 1);
-    this.date6=now.getDate()
-
-
-    now.setDate(now.getDate() - 1);
-    now.setDate(now.getDate() - 1);
-    
+    // 页面创建时获取今天是周几
     this.day1 = now.getDay();
-
     now.setDate(now.getDate() - 1);
-    this.day2=now.getDay()
+    this.day2 = now.getDay();
     now.setDate(now.getDate() - 1);
-    this.day3=now.getDay()
+    this.day3 = now.getDay();
     now.setDate(now.getDate() - 1);
-    this.day4=now.getDay()
+    this.day4 = now.getDay();
     now.setDate(now.getDate() - 1);
-    this.day5=now.getDay()
+    this.day5 = now.getDay();
     now.setDate(now.getDate() - 1);
-    this.day6=now.getDay()
-
+    this.day6 = now.getDay();
   },
-  methods:{
-    timeClick(which){
-      this.time_choice = which
-      if(which == 7){
-        this.$store.state.date = 'before'
-      }else{
-        this.$store.state.date = `${this.year}-${this.month>=10?this.month:'0'+this.month}-${this['date'+which]>=10?this['date'+which]:'0'+this['date'+which]}`
+  methods: {
+    // 更换日期
+    timeClick(which) {
+      this.time_choice = which;
+      if (which == 7) {
+        this.$store.commit("SET_DATE", "before");
+      } else {
+        let finalDate = `${this.year}-${
+          this.month >= 10 ? this.month : "0" + this.month
+        }-${
+          this["date" + which] >= 10
+            ? this["date" + which]
+            : "0" + this["date" + which]
+        }`;
+        this.$store.commit("SET_DATE", finalDate);
       }
-      // alert(this.$store.state.date)
     },
-    checkCategory(id){
-      this.$store.commit('SET_CATEGORYID',id)
+    //更换种类id
+    checkCategory(id) {
+      this.$store.commit("SET_CATEGORYID", id);
     },
-    checkDate(date){
-      this.$store.commit('SET_DATE',date)
+    // 更换校区
+    checkCampus(campus) {
+      this.$store.commit("SET_CAMPUS", campus);
     },
-    checkCampus(campus){
-      this.$store.commit('SET_CAMPUS',campus)
+    showCampus() {
+      this.isShowCampus = !this.isShowCampus;
+      this.isShowCategory = false;
+      this.isShowDate = false;
+      this.campusArrow = !this.campusArrow;
+      this.categoryArrow = true;
+      this.dateArrow = true;
+      this.isCheckedCampus = !this.isCheckedCampus;
+      this.isCheckedCategory = true;
+      this.isCheckedDate = true;
     },
-    toShow1:function(){
-      this.isShow1=!this.isShow1;
-      this.isShow2=false;
-      this.isShow3=false;
-      this.isTu21=!this.isTu21;
-      this.isTu22=true;
-      this.isTu23=true;
-      this.isBox1=!this.isBox1;
-      this.isBox2=true;
-      this.isBox3=true;
+    notShowCampus() {
+      this.isShowCampus = false;
+      this.campusArrow = true;
+      this.isCheckedCampus = true;
     },
-    notShow1:function(){
-      this.isShow1=false;
-      this.isTu21=true;
-      this.isBox1=true;
+    showCategory() {
+      listCategories(0).then((res) => {
+        this.categories = res.data.data;
+      });
+      this.isShowCategory = !this.isShowCategory;
+      this.isShowCampus = false;
+      this.isShowDate = false;
+      this.categoryArrow = !this.categoryArrow;
+      this.campusArrow = true;
+      this.dateArrow = true;
+      this.isCheckedCategory = !this.isCheckedCategory;
+      this.isCheckedCampus = true;
+      this.isCheckedDate = true;
     },
-    toShow2:function(){
-      listCategories(0).then((res)=>{
-        console.log("hahahhah")
-        this.categories=res.data.data
-      })
-      this.isShow2=!this.isShow2;
-      this.isShow1=false;
-      this.isShow3=false;
-      this.isTu22=!this.isTu22;
-      this.isTu21=true;
-      this.isTu23=true;
-      this.isBox2=!this.isBox2;
-      this.isBox1=true;
-      this.isBox3=true;
+    notShowCategory() {
+      this.isShowCategory = false;
+      this.categoryArrow = true;
+      this.isCheckedCategory = true;
     },
-    notShow2:function(){
-      this.isShow2=false;
-      this.isTu22=true;
-      this.isBox2=true;
+    showDate() {
+      this.isShowDate = !this.isShowDate;
+      this.isShowCampus = false;
+      this.isShowCategory = false;
+      this.dateArrow = !this.dateArrow;
+      this.campusArrow = true;
+      this.categoryArrow = true;
+      this.isCheckedDate = !this.isCheckedDate;
+      this.isCheckedCampus = true;
+      this.isCheckedCategory = true;
     },
-    toShow3:function(){
-      this.isShow3=!this.isShow3;
-      this.isShow1=false;
-      this.isShow2=false;
-      this.isTu23=!this.isTu23;
-      this.isTu21=true;
-      this.isTu22=true;
-      this.isBox3=!this.isBox3;
-      this.isBox1=true;
-      this.isBox2=true;
-    },
-    notShow3:function(){
-      this.isShow3=false;
-      this.isTu23=true;
-      this.isBox3=true;
+    notShowDate() {
+      this.isShowDate = false;
+      this.dateArrow = true;
+      this.isCheckedDate = true;
     },
     // 点击后颜色改变
-    change1:function(){
-      this.checkCampus(0)
-      this.isZi11=!this.isZi11;
-      this.isZi21=!this.isZi21;
-      this.isZi12=true;
-      this.isZi22=true;
+    checkBei() {
+      this.checkCampus(0);
+      this.checkedBei = !this.checkedBei;
+      this.checkedWei = true;
     },
-    change2:function(){
-      this.checkCampus(1)
-      this.isZi12=!this.isZi12;
-      this.isZi22=!this.isZi22;
-      this.isZi11=true;
-      this.isZi21=true;
+    checkWei() {
+      this.checkCampus(1);
+      this.checkedWei = !this.checkedWei;
+      this.checkedBei = true;
     },
-    change3:function(){
-      this.isZi13=!this.isZi13;
-      this.isZi31=!this.isZi31;
-      this.isZi14=true;
-      this.isZi32=true;
-      this.isZi15=true;
-      this.isZi33=true;
-      this.isZi16=true;
-      this.isZi34=true;
-      this.isZi17=true;
-      this.isZi35=true;
-    },
-    change4:function(){
-      this.isZi13=true;
-      this.isZi31=true;
-      this.isZi14=!this.isZi14;
-      this.isZi32=!this.isZi32;
-      this.isZi15=true;
-      this.isZi33=true;
-      this.isZi16=true;
-      this.isZi34=true;
-      this.isZi17=true;
-      this.isZi35=true;
   },
-  change5:function(){
-      this.isZi13=true;
-      this.isZi31=true;
-      this.isZi14=true;
-      this.isZi32=true;
-      this.isZi15=!this.isZi15;
-      this.isZi33=!this.isZi33;
-      this.isZi16=true;
-      this.isZi34=true;
-      this.isZi17=true;
-      this.isZi35=true;
-  },
-  change6:function(){
-      this.isZi13=true;
-      this.isZi31=true;
-      this.isZi14=true;
-      this.isZi32=true;
-      this.isZi15=true;
-      this.isZi33=true;
-      this.isZi16=!this.isZi16;
-      this.isZi34=!this.isZi34;
-      this.isZi17=true;
-      this.isZi35=true;
-  },
-  change7:function(){
-      this.isZi13=true;
-      this.isZi31=true;
-      this.isZi14=true;
-      this.isZi32=true;
-      this.isZi15=true;
-      this.isZi33=true;
-      this.isZi16=true;
-      this.isZi34=true;
-      this.isZi17=!this.isZi17;
-      this.isZi35=!this.isZi35;
-  },
-}
-}
+};
 </script>
 
 <style scoped lang="css">
-body{
+body {
   margin: 0px;
   background-color: rgb(248, 248, 248);
   height: 100%;
   width: 100%;
 }
-#total{
+#total {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -385,17 +435,17 @@ body{
   top: 0px;
   z-index: 10;
 }
-.content{
+.content {
   padding: 0px;
   box-sizing: border-box;
   display: flex;
   height: 50px;
   width: 100%;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   justify-content: space-around;
 }
 
-.top{
+.top {
   background-color: white;
   width: 100%;
   height: 10px;
@@ -406,7 +456,7 @@ body{
   display: flex;
   justify-content: center;
 }
-.box0{
+.box0 {
   background-color: rgb(248, 248, 248);
   border-radius: 20px 20px 0px 0px;
   width: 100%;
@@ -414,91 +464,91 @@ body{
   display: flex;
   justify-content: center;
 }
-.zi{
+.zi {
   height: 100%;
   width: 70%;
   font-display: row;
   font-size: 1.2rem;
-  color:#6C6C6D;
+  color: #6c6c6d;
   margin-top: 8px;
   margin-left: 35px;
   font-family: SourceHanSansCN-Bold;
   font-weight: Bold;
 }
-.tu{
+.tu {
   height: 100%;
   width: 30%;
 }
-.tu1{
+.tu1 {
   width: 30%;
   width: 40px;
   height: 10px;
 }
-.tu2{
+.reversedTriangle {
   height: 10px;
   width: 15px;
   margin-top: 8px;
   background: url("../assets/daosanjiao.png");
   background-size: 100% 100%;
 }
-.tu3{
+.triangle {
   height: 10px;
   width: 15px;
   margin-top: 8px;
   background: url("../assets/zhengsanjiao.png");
   background-size: 100% 100%;
 }
-.mask{
-	/* height: 85%; */
+.mask {
+  /* height: 85%; */
   top: 60px;
-	width: 100%;
-	background-color: rgba(0,0,0,0.5);
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   bottom: 0px;
-	z-index: 9;
+  z-index: 9;
 }
-.menu1{
+.menu1 {
   height: 50px;
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content:space-evenly;
+  justify-content: space-evenly;
   background: rgb(248, 248, 248);
   justify-content: space-around;
   border-radius: 0px 0px 15px 15px;
   z-index: 10;
 }
 
-.zi1{
+.backgroud-white {
   margin-top: 8px;
-  border-color:#589788;
-  border-width:2px;
-  border-style: solid; 
-  border-radius:25px ;
-  justify-content:center;
+  border-color: #589788;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 25px;
+  justify-content: center;
   height: 30px;
   width: 90px;
 }
 /* 点击后背景颜色改变 */
-.zi10{
+.backgroud-green {
   margin-top: 8px;
-  border-color:#589788;
-  border-width:2px;
-  border-style: solid; 
-  border-radius:25px ;
-  justify-content:center;
-  background-color:#589788 ;
+  border-color: #589788;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 25px;
+  justify-content: center;
+  background-color: #589788;
   height: 30px;
   width: 90px;
 }
 
-.zidanyi{
+.zidanyi {
   margin-top: 8px;
-  justify-content:center;
+  justify-content: center;
   height: 30px;
   width: 90px;
 }
-.zi2{
+.word-green {
   font-weight: Bold;
   font-size: 1rem;
   color: #589788;
@@ -506,7 +556,7 @@ body{
   margin-left: 20px;
 }
 /* 点击后颜色改变 */
-.zi20{
+.word-white {
   font-weight: Bold;
   font-size: 1rem;
   color: white;
@@ -514,8 +564,7 @@ body{
   margin-left: 20px;
 }
 
-
-.menu2{
+.menu2 {
   height: 150px;
   width: 100%;
   display: flex;
@@ -525,16 +574,16 @@ body{
   background: rgb(248, 248, 248);
   z-index: 12;
 }
-.box1{
+.box1 {
   padding: 0px;
   display: flex;
   margin: 0px;
   height: 50px;
   flex-direction: row;
-  justify-content:space-evenly;
+  justify-content: space-evenly;
   justify-content: space-around;
 }
-.zi3{
+.zi3 {
   font-weight: Bold;
   font-size: 0.9rem;
   color: #589788;
@@ -542,13 +591,13 @@ body{
   margin-left: 16px;
 }
 /* menu3时间 */
-#l_menu3{
+#l_menu3 {
   height: 100%;
   width: 100%;
   box-sizing: border-box;
   padding: 0 5vw;
 }
-#l_menu3>div:nth-child(1){
+#l_menu3 > div:nth-child(1) {
   height: 30%;
   font-family: SourceHanSansCN-Bold;
   font-weight: Bold;
@@ -556,29 +605,28 @@ body{
   justify-content: flex-end;
   align-items: center;
 }
-#l_menu3>div:nth-child(2){
+#l_menu3 > div:nth-child(2) {
   height: 60%;
   display: flex;
-  
 }
-#l_menu3>div:nth-child(2)>div{
+#l_menu3 > div:nth-child(2) > div {
   width: calc(100% / 7);
   height: 100%;
   box-sizing: border-box;
 }
-#l_menu3>div:nth-child(2)>div.first_time{
+#l_menu3 > div:nth-child(2) > div.first_time {
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: calc(100vw / 14);
   /* background-color: rgb(88,151,136); */
 }
-#l_menu3>div:nth-child(2)>div.first_time>span{
+#l_menu3 > div:nth-child(2) > div.first_time > span {
   width: 18px;
   font-size: 18px;
   /* color: white; */
 }
-#l_menu3>div:nth-child(2)>div.other_time>div{
+#l_menu3 > div:nth-child(2) > div.other_time > div {
   height: 100%;
   width: 100%;
   padding: 20px 0;
@@ -592,7 +640,7 @@ body{
   /* color: white; */
 }
 /* 点击后颜色改变 */
-.zi30{
+.zi30 {
   font-weight: Bold;
   font-size: 0.9rem;
   color: white;

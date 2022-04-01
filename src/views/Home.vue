@@ -40,7 +40,9 @@
                 <!-- 标签 -->
                 <div class="tag">
                   <div class="category-name">#{{ post.categoryName }}</div>
-                  <div class="tag-name" v-for="t in post.tag" :key="t.index">#{{ t }}</div>
+                  <div class="tag-name" v-for="t in post.tag" :key="t.index">
+                    #{{ t }}
+                  </div>
                 </div>
                 <!-- 拾获时间和地点 -->
                 <div class="find-time">
@@ -145,8 +147,10 @@ export default {
     // 触发加载
     load() {
       this.loading = true;
-      this.getPosts(this.currentPage + 1);
-      this.loading = false;
+      setTimeout(() => {
+        this.getPosts(this.currentPage + 1);
+        this.loading = false;
+      }, 2000);
     },
     // 获取所有帖子
     getPosts(pages) {
@@ -272,7 +276,7 @@ body {
   background-color: rgb(255, 255, 255);
 }
 /* 标签样式 */
-.content .tag{
+.content .tag {
   display: flex;
 }
 .content .tag .tag-name {

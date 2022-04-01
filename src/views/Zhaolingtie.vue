@@ -64,7 +64,7 @@
       <!-- 详细信息 -->
       <div class="detail-message">
         <div class="zi2">详细特征</div>
-        <div class="basic-box" v-show="wupinyanse">
+        <div class="basic-box">
           <div class="tu6"></div>
 
           <el-select v-model="selectedTag" placeholder="请选择标签">
@@ -90,7 +90,7 @@
           </div>
         </div>
 
-        <div class="box3" v-show="qitamiaoshu">
+        <div class="box3" v-show="otherDescription">
           <div class="basic-box">
             <div class="tu8"></div>
             <div class="zi3">其他描述</div>
@@ -224,59 +224,60 @@ export default {
   name: "zhaolingtie",
   data() {
     return {
-      selectedTag: "",
-      categoryOneId: "",
-      categoryTwo: {},
-      addFileBtnPic: "",
-      smallTagDetail: "",
       post: {
         tags: "",
       },
+      selectedTag: "",
+
+      addFileBtnPic: "",
+      // 选取的标签内容
+      smallTagDetail: "",
+
+      // 一级种类的列表
       categoryOneList: [],
+      // 二级种类的列表
       categoryTwoList: [],
+      // 所有标签的列表
       tagList: [],
+      // 标签内容的列表
       tagContent: [],
-      choseCategory: true,
-      choseCategoryAfter: false,
-      message1: "#物品类别",
-      wupinyanse: true,
-      chose2: true,
+
+
+
       chose2After: false,
-      message2: "#物品颜色",
-      wupinpinpai: false,
-      chose3: true,
-      chose3After: false,
-      message3: "#物品品牌",
 
       // 其他描述
-      qitamiaoshu: true,
-      // 联系方式
-      message4: "手机号",
+      otherDescription: true,
 
-      // 菜单1
+      // 选取一级种类的id
+      categoryOneId: "",
+      // 最终选好的二级种类
+      categoryTwo: {},
+
+      // 是否要选择种类
+      choseCategory: true,
+      // 是否选择完种类
+      choseCategoryAfter: false,
+
+      // 是否展示一级菜单
       showCategoryOne: false,
-
-      //二级标签
+      // 是否展示二级菜单
       showCategoryTwo: false,
+      // 是否展示标签内容
+      showTagContent: false,
 
       // 选择校区
       isZi51: true,
       isZi52: true,
-      // 选择物品颜色
-      showTagContent: false,
+
       //联系方式
-      contact1: false,
       contact2: true,
-      contact3: false,
+
       isZi7: true,
       isContact: true,
       isTu12: true,
       isZi81: true,
       isZi82: true,
-      // 发布失败
-      isShow8: false,
-      // 填写不完整
-      isShow10: false,
       // 发布
       isZi6: true,
     };
@@ -298,17 +299,17 @@ export default {
     publish() {
       this.post.tags = this.post.tags.trim();
       publish(this.post).then((res) => {
-        if(res.data.state===200){
-            this.$message({
-              type: 'success',
-              message: `${res.data.msg}`
-            })
-            this.$router.push('/')
-        }else{
-            this.$message({
-              type: 'error',
-              message: `${res.data.msg}`
-            })
+        if (res.data.state === 200) {
+          this.$message({
+            type: "success",
+            message: `${res.data.msg}`,
+          });
+          this.$router.push("/");
+        } else {
+          this.$message({
+            type: "error",
+            message: `${res.data.msg}`,
+          });
         }
       });
     },
@@ -343,9 +344,7 @@ export default {
     tagOK() {
       this.post.tags += this.smallTagDetail + " ";
       console.log(this.post.tags);
-      (this.showTagContent = false),
-        (this.chose2 = false),
-        (this.chose2After = true);
+      (this.showTagContent = false), (this.chose2After = true);
     },
 
     // 切换菜单
