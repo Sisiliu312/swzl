@@ -1,11 +1,13 @@
 import request from "@/request"
 
 
-export function getPosts(page) {
+export function getPosts(currentPage) {
 	return request({
 		  method: 'get',
 		  url: '/posts',
-		  data: page
+		  params:{
+			  currentPage: currentPage
+		  }
 		})
 }
 
@@ -16,24 +18,33 @@ export function getPostDetail(id){
 	})
 }
 
-export function getPostByCampus(id){
+export function getPostByCampus(id,currentPage){
 	return request({
 		method: 'get',
-		url: `/posts/campus/${id}`
+		url: `/posts/campus/${id}`,
+		params:{
+			currentPage: currentPage
+		}
 	})
 }
 
-export function getPostByCategory(id){
+export function getPostByCategory(id,currentPage){
 	return request({
 		method: 'get',
-		url: `/posts/category/${id}`
+		url: `/posts/category/${id}`,
+		params:{
+			currentPage: currentPage
+		}
 	})
 }
 
-export function getPostByDate(date){
+export function getPostByDate(date,currentPage){
 	return request({
 		method: 'get',
-		url: `/posts/date/${date}`
+		url: `/posts/date/${date}`,
+		params:{
+			currentPage: currentPage
+		}
 	})
 }
 
