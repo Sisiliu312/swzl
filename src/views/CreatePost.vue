@@ -199,7 +199,11 @@
         <div class="menu1-word">请选择</div>
       </div>
       <div class="menu6-middle">
-        <el-radio-group v-model="smallTagDetail">
+        <div v-if="selectedTag=='卡号'">
+          <el-input v-model="smallTagDetail" placeholder="请输入卡号"></el-input>
+        </div>
+        <div v-else>
+          <el-radio-group v-model="smallTagDetail">
           <el-radio-button
             style="margin: 20px"
             v-for="smallTag in tagContent"
@@ -208,6 +212,8 @@
             >{{ smallTag }}</el-radio-button
           >
         </el-radio-group>
+        </div>
+        
       </div>
       <div class="menu1-bottom" @click="tagOK">确定</div>
     </div>

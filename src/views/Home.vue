@@ -141,16 +141,19 @@ export default {
   watch: {
     // 监听所选校区 种类 日期有无变化
     campus() {
+      this.pages= 1,
       this.currentPage = 1;
       this.posts = [];
       this.getPostByCampus(this.$store.state.campus, this.currentPage);
     },
     categoryId() {
+      this.pages= 1,
       this.currentPage = 1;
       this.posts = [];
       this.getPostByCategory(this.$store.state.categoryId, this.currentPage);
     },
     date() {
+      this.pages= 1,
       this.currentPage = 1;
       this.posts = [];
       this.getPostByDate(this.$store.state.date, this.currentPage);
@@ -164,7 +167,18 @@ export default {
     load() {
       this.loading = true;
       setTimeout(() => {
-        this.getPosts(this.currentPage + 1);
+        if(this.$store.state.campus!=''){
+            this.getPostByCampus(this.$store.state.campus, this.currentPage+1);
+        }
+        if(this.$store.state.categoryId!=''){
+          this.getPostByCategory(this.$store.state.categoryId, this.currentPage+1);
+        }
+        if(this.$store.state.date!=''){
+          this.getPostByDate(this.$store.state.date, this.currentPage+1);
+        }
+        if(this.$store.state.campus==''&&this.$store.state.categoryId==''&&this.$store.state.date==''){
+          this.getPosts(this.currentPage + 1);
+        }
         this.loading = false;
       }, 1000);
     },
@@ -173,6 +187,7 @@ export default {
       getPosts(pages)
         .then((res) => {
           let pageInfo = res.data.data;
+          console.log(pageInfo)
           pageInfo.records.forEach((item) => {
             this.posts.push(item);
           });
