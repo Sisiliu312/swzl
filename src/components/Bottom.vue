@@ -22,10 +22,10 @@ export default {
     name: 'bottom',
 	methods:{
 		toXinjian:function(){
-			this.$router.push('/Xinjian')
+			this.$router.push('/Create')
 		},
 		toGerenzhongxin:function(){
-			this.$router.push('/Gerenzhongxin')
+			this.$router.push('/MyInfo')
 		},
 		toHome:function(){
 			this.$router.push('/Home')

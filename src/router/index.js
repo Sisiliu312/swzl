@@ -53,6 +53,11 @@ const routes=[
 		path:'/login',
     name:'login',
 		component: r=>require.ensure([],()=>r(require('@/views/Login')),'login')
+	},
+  {
+		path:'/EditInfo',
+    name:'EditInfo',
+		component: r=>require.ensure([],()=>r(require('@/views/EditInfo')),'EditInfo')
 	}
 ]
 const router =new VueRouter({
@@ -84,7 +89,6 @@ router.beforeEach((to,from,next)=>{
         next();
       }
 		}
-		
 	}
   //如果没有token 则跳到登录页
   else {

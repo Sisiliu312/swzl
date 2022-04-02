@@ -166,7 +166,7 @@ export default {
       });
     },
     toGerenzhongxin() {
-      this.$router.push("/Gerenzhongxin");
+      this.$router.push("/MyInfo");
     },
     selectedPost() {
       (this.isSelectedPost = false),

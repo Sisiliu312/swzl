@@ -1,7 +1,7 @@
 <template>
   <body>
     <div class="top1">
-      <div class="tu1" @click="toGerenzhongxin"></div>
+      <div class="tu1" @click="goLastPage"></div>
       <div class="top1-box">匹配通知</div>
     </div>
 
@@ -54,7 +54,7 @@
 <script>
 import { getUserPost, deleteUserPost } from "@/api/user.js";
 export default {
-  name: "pipeitongzhi",
+  name: "MyMessage",
   components: {},
   data() {
     return {
@@ -66,8 +66,8 @@ export default {
     };
   },
   methods: {
-    toGerenzhongxin: function () {
-      this.$router.push("/Gerenzhongxin");
+    goLastPage() {
+      this.$router.go(-1)
     },
     delete1(id) {
       deleteUserPost(id).then((res) => {

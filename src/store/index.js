@@ -14,8 +14,6 @@ export default new Vuex.Store({
     userInfo: JSON.parse(sessionStorage.getItem("userInfo"))
   },
 
-
-
   mutations: {
     SET_TOKEN: (state, token) => {
       state.token = token
@@ -41,6 +39,7 @@ export default new Vuex.Store({
       sessionStorage.setItem("userInfo", JSON.stringify(userInfo))
     }
   },
+
   actions: {
     login({commit}, user) {
       return new Promise((resolve, reject) => {
@@ -76,6 +75,15 @@ export default new Vuex.Store({
           reject(error)
         })
       })
+    },
+    updateUserInfo({commit},user){
+      console.log(user)
+      let userInfo;
+      userInfo.username=user.username
+      userInfo.avatar=user.avatar
+      userInfo.id=user.id
+      console.log(userInfo)
+      commit('SET_USERINFO',userInfo)
     }
   },
   getters: {

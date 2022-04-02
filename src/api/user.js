@@ -22,3 +22,12 @@ export function getUserInfo(data){
 		data
 	})
 }
+
+// 更改用户头像
+export function updateUserInfo(data){
+	return request({
+		method: 'put',
+		url: '/user/update',
+		data
+	})
+}
