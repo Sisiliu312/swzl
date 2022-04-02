@@ -4,7 +4,7 @@ import store from '@/store'
 
 
 const service = axios.create({
-  baseURL: "http://120.53.120.80:8080",
+  baseURL: "http://localhost:8888",
   timeout: 10000
 })
 

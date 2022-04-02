@@ -157,7 +157,6 @@ export default {
       getPosts(pages)
         .then((res) => {
           let pageInfo = res.data.data;
-          console.log(pageInfo);
           pageInfo.records.forEach((item) => {
             this.posts.push(item);
           });
