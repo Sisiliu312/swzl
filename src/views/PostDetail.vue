@@ -1,49 +1,49 @@
 <template>
   <body>
-    <transition name="fade"> 
+    <transition name="fade">
       <div id="mask_bigPic" v-if="maskPic_show" @click="smallPic">
-        <img :src="post.images" alt="">
+        <img :src="post.images" alt="" />
       </div>
     </transition>
     <div class="return" @click="goLastPage">
       <div class="img"></div>
     </div>
     <div class="tu" @click="bigPic">
-      <img :src="post.images" alt="">
+      <img :src="post.images" alt="" />
     </div>
     <div class="wen">
       <div class="top1">
         <div class="touxiang">
-          <div class="tu1"></div>
+          <div class="tu1">
+            <img :src="user.avatar" style="width:50px;height:50px" alt="">
+          </div>
         </div>
         <div class="zi">
-          <div class="nicheng">{{this.$store.state.userInfo.username}}</div>
-          <div class="time">{{post.created}}</div>
+          <div class="nicheng">{{ this.user.username }}</div>
+          <div class="time">{{ post.created }}</div>
         </div>
       </div>
       <div class="top2">
-        <div class="label">{{post.categoryName}}</div>
-        <div class="label">{{post.tags}}</div>
+        <div class="label">{{ post.categoryName }}</div>
+        <div class="label">{{ post.tags }}</div>
       </div>
       <div class="box">
         <div class="list">
           <div class="list1">详细描述</div>
-          <div class="list2">{{post.description}}</div>
+          <div class="list2">{{ post.description }}</div>
         </div>
         <div class="list">
           <div class="list1">拾获地点</div>
-          <div class="list2">{{post.findLocation}}</div>
+          <div class="list2">{{ post.findLocation }}</div>
         </div>
         <div class="list">
           <div class="list1">放置地点</div>
-          <div class="list2">{{post.nowLocation}}</div>
+          <div class="list2">{{ post.nowLocation }}</div>
         </div>
         <div class="list">
           <div class="list1">联系方式</div>
           <div class="list3">
-              <!-- <div class="number">12345678900</div>
-              <div class="item">Mobile phone</div> -->
-              <div class="number">{{post.contact}}</div>
+            <div class="number">{{ post.contact }}</div>
           </div>
         </div>
       </div>
@@ -52,55 +52,76 @@
 </template>
 
 <script>
-
-import {getPostDetail} from '@/api/post'
+import { getPostDetail } from "@/api/post";
+import { getUserById } from "@/api/user";
 
 export default {
-    name: 'postDetail',
-    data(){
-      return{
-        maskPic_show:false,
-        post:[]
-      }
+  name: "postDetail",
+  data() {
+    return {
+      maskPic_show: false,
+      post: {},
+      user: {},
+    };
+  },
+  created() {
+    console.log("22222")
+    this.getPostDetail(this.$route.params.id);
+  },
+  // mounted() {
+  //   console.log("11111")
+  //   console.log(this.post)
+  //   this.getUserById(this.post.userId);
+  // },
+  methods: {
+    getUserById(userId) {
+      console.log(userId);
+      getUserById(userId).then((res) => {
+        this.user = res.data.data;
+      });
     },
-    created(){
-      this.getPostDetail(this.$route.params.id)
+    bigPic() {
+      this.maskPic_show = true;
     },
-    methods:{
-      bigPic(){
-        this.maskPic_show = true
-      },
-      smallPic(){
-        this.maskPic_show = false
-      },
-      // 返回到上一页面
-      goLastPage(){
-        this.$router.go(-1)
-      },
-      getPostDetail(id){
-        getPostDetail(id).then((res)=>{
-          if(res.data.state==200){
-            this.post=res.data.data
-          }else{
-            this.$message.error(res.data.msg)
+    smallPic() {
+      this.maskPic_show = false;
+    },
+    // 返回到上一页面
+    goLastPage() {
+      this.$router.go(-1);
+    },
+    getPostDetail(id) {
+      getPostDetail(id)
+        .then((res) => {
+          if (res.data.state == 200) {
+            this.post = res.data.data;
+            console.log(this.post)
+            getUserById(this.post.userId).then(res=>{
+              console.log(res)
+              this.user = res.data.data;
+              console.log(this.user)
+            })
+            
+          } else {
+            this.$message.error(res.data.msg);
           }
-        }).catch((err)=>{
-        console.log(err)
-        this.$message.error("系统错误")
-      }).finally(()=>{
-
-      })
-      }
+        })
+        .catch((err) => {
+          console.log(err);
+          this.$message.error("系统错误");
+        })
+        .finally(() => {});
     },
-}
+  },
+};
 </script>
 
 <style scoped lang="css">
-body{
+body {
   margin: 0px;
   height: auto;
   width: 100%;
-  display:flex;
+  display: flex;
   flex-direction: column;
 }
 .fade-enter-active,
@@ -117,23 +138,23 @@ body{
 .fade-leave {
   left: 0.6;
 }
-#mask_bigPic{
+#mask_bigPic {
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 999;
-  background-color: rgba(0,0,0,0.35);
+  background-color: rgba(0, 0, 0, 0.35);
   display: flex;
   justify-content: center;
   align-items: center;
 }
-#mask_bigPic>img{
+#mask_bigPic > img {
   max-width: 90%;
   max-height: 90%;
 }
-.return{
+.return {
   position: absolute;
   height: 40px;
   width: 40px;
@@ -143,15 +164,15 @@ body{
   z-index: 4;
   border-radius: 10px;
 }
-.img{
+.img {
   background: url("../assets/lansejiantou.png");
-  background-size:100% 100% ;
+  background-size: 100% 100%;
   margin-top: 12px;
   margin-left: 12px;
   height: 18px;
   width: 13px;
 }
-.tu{
+.tu {
   height: 300px;
   width: 100%;
   background-color: rgb(244, 244, 244);
@@ -160,10 +181,10 @@ body{
   z-index: 2;
   overflow: hidden;
 }
-.tu>img{
+.tu > img {
   width: 100%;
 }
-.wen{
+.wen {
   height: auto;
   width: 100%;
   position: absolute;
@@ -171,27 +192,27 @@ body{
   z-index: 3;
   display: flex;
   flex-direction: column;
-  border-radius:30px 30px 0px 0px;
+  border-radius: 30px 30px 0px 0px;
   background-color: white;
 }
-.top1{
+.top1 {
   height: 95px;
   display: flex;
   flex-direction: row;
 }
-.touxiang{
+.touxiang {
   width: 20%;
   height: 100%;
 }
-.tu1{
-  border-radius:50px;
+.tu1 {
+  border-radius: 50px;
   background-color: rgb(244, 244, 244);
   margin-top: 20px;
   margin-left: 30px;
   height: 60px;
   width: 60px;
 }
-.zi{
+.zi {
   width: 80%;
   height: 100%;
   margin-top: 35px;
@@ -199,76 +220,76 @@ body{
   font-size: 1rem;
   font-family: SourceHanSansCN-Medium;
   font-weight: medium;
-  color: #6C6D6D;
+  color: #6c6d6d;
 }
-.top2{
+.top2 {
   height: 30px;
   display: flex;
   flex-direction: row;
 }
-.label{
+.label {
   height: 23px;
   width: auto;
-  border-radius:20px;
+  border-radius: 20px;
   margin-left: 6px;
   margin-right: 6px;
-  padding-left:10px;
-  padding-top:4px;
-  padding-right:10px;
-  background-color: #5897AA;
+  padding-left: 10px;
+  padding-top: 4px;
+  padding-right: 10px;
+  background-color: #5897aa;
   font-size: 0.85rem;
-  color:white;
+  color: white;
 }
-.box{
+.box {
   height: 270px;
   display: flex;
   flex-direction: column;
-  justify-content:space-around;
+  justify-content: space-around;
 }
-.list{
+.list {
   display: flex;
   height: auto;
   flex-direction: row;
-  justify-content:space-around;
+  justify-content: space-around;
   margin-top: 15px;
 }
-.list1{
+.list1 {
   width: 30%;
   height: auto;
   font-size: 1rem;
   font-weight: bold;
-  color: #4E4E4E;
-  padding-top:9px;
-  margin-left:15px ;
-  margin-right:5px ;
+  color: #4e4e4e;
+  padding-top: 9px;
+  margin-left: 15px;
+  margin-right: 5px;
 }
-.list2{
+.list2 {
   width: 100%;
   background-color: #e4ebec;
   padding: 9px;
   border-radius: 20px;
-  color: #2A2A2A;
-  margin-right:30px ;
+  color: #2a2a2a;
+  margin-right: 30px;
   font-size: medium;
 }
-.list3{
+.list3 {
   width: 100%;
   background-color: #e4ebec;
   padding: 9px;
   border-radius: 20px;
-  margin-right:30px ;
+  margin-right: 30px;
   display: flex;
   flex-direction: row;
 }
-.number{
-    color: #2A2A2A;
-    font-size: medium;
-    width: auto;
-    margin-right: 20px;
+.number {
+  color: #2a2a2a;
+  font-size: medium;
+  width: auto;
+  margin-right: 20px;
 }
-.item{
-    color: #A6A6A6;
-    font-size: medium;
-    font-size: 0.9rem;
+.item {
+  color: #a6a6a6;
+  font-size: medium;
+  font-size: 0.9rem;
 }
 </style>

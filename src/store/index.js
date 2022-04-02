@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {login} from '@/api/login'
+import {login,logout} from '@/api/login'
 import {getUserInfo} from '@/api/user'
 
 Vue.use(Vuex)
@@ -41,6 +41,23 @@ export default new Vuex.Store({
   },
 
   actions: {
+    logout({commit}){
+      logout().then(res => {
+        console.log(res)
+        if(res.data.state===200){
+          console.log("hahha")
+          commit('SET_TOKEN', '')
+          commit("SET_USERINFO", '')
+          location.reload()
+          resolve()
+        }else{
+          console.log("hahha")
+          reject(res.data.msg)
+        }
+      }).catch(error => {
+        reject(error)
+      })
+    },
     login({commit}, user) {
       return new Promise((resolve, reject) => {
         login(user).then(res => {

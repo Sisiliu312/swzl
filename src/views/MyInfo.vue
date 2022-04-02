@@ -54,6 +54,8 @@
       </div>
     </div>
 
+    <el-button type="danger" @click="logout">退出登录</el-button>
+
     <!-- 弹窗展示使用方法 -->
     <div class="mask" v-show="sysm"></div>
     <div class="shiyongshuoming" v-show="sysm">
@@ -113,16 +115,19 @@ export default {
     };
   },
   methods: {
-    toCheck: function () {
+    logout(){
+      this.$store.dispatch('logout')
+    },
+    toCheck() {
       this.isCheck = true;
     },
-    tosysm: function () {
+    tosysm() {
       this.sysm = true;
     },
-    ok: function () {
+    ok() {
       this.sysm = false;
     },
-    toPipeitongzhi: function () {
+    toPipeitongzhi() {
       this.$router.push("/MyMessage");
     },
     toWodefabu: function () {

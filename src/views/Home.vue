@@ -190,7 +190,7 @@ export default {
     },
     // 前往帖子的详情页面
     toPostDetail(id) {
-      this.$router.push(`/Sample1/${id}`);
+      this.$router.push(`/PostDetail/${id}`);
     },
     // 根据校区 种类 时间 查询帖子
     getPostByCampus(campus, currentPage) {

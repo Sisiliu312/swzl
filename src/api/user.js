@@ -1,5 +1,11 @@
 import request from "@/request"
 
+export function getUserById(id){
+	return request({
+		method: 'get',
+		url: `/info/${id}`
+	})
+}
 
 export function getUserPost(id){
 	return request({
