@@ -15,3 +15,10 @@ export function getAskByUser(id){
 		url: `/asks/user/${id}`
 	})
 }
+
+export function deleteAsk(id){
+	return request({
+		method: 'delete',
+		url:`/asks/${id}`
+	})
+}

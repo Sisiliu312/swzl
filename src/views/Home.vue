@@ -150,7 +150,7 @@ export default {
       setTimeout(() => {
         this.getPosts(this.currentPage + 1);
         this.loading = false;
-      }, 2000);
+      }, 1000);
     },
     // 获取所有帖子
     getPosts(pages) {

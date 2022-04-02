@@ -5,7 +5,7 @@
         <img :src="post.images" alt="">
       </div>
     </transition>
-    <div class="return" @click="toHome">
+    <div class="return" @click="goLastPage">
       <div class="img"></div>
     </div>
     <div class="tu" @click="bigPic">
@@ -56,7 +56,7 @@
 import {getPostDetail} from '@/api/post'
 
 export default {
-    name: 'sample',
+    name: 'postDetail',
     data(){
       return{
         maskPic_show:false,
@@ -73,8 +73,9 @@ export default {
       smallPic(){
         this.maskPic_show = false
       },
-      toHome:function(){
-        this.$router.push('/Home')
+      // 返回到上一页面
+      goLastPage(){
+        this.$router.go(-1)
       },
       getPostDetail(id){
         getPostDetail(id).then((res)=>{

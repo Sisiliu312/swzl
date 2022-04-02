@@ -15,44 +15,39 @@ const routes=[
     component:() => import('../views/Home.vue')
   },
   {
-    path:'/Gerenzhongxin',
-    name:'Gerenzhongxin',
-    component:() => import('../views/Gerenzhongxin.vue')
+    path:'/MyInfo',
+    name:'MyInfo',
+    component:() => import('../views/MyInfo.vue')
   },
   {
-    path:'/Sample1/:id',
-    name:'Sample1',
-    component:() => import('../views/Sample1.vue')
+    path:'/PostDetail/:id',
+    name:'PostDetail',
+    component:() => import('../views/PostDetail.vue')
   },
   {
-    path:'/Sample2',
-    name:'Sample2',
-    component:() => import('../views/Sample2.vue')
+    path:'/Create',
+    name:'Create',
+    component:() => import('../views/Create.vue')
   },
   {
-    path:'/Xinjian',
-    name:'Xinjian',
-    component:() => import('../views/Xinjian.vue')
+    path:'/CreatePost',
+    name:'CreatePost',
+    component:() => import('../views/CreatePost.vue')
   },
   {
-    path:'/Zhaolingtie',
-    name:'Zhaolingtie',
-    component:() => import('../views/Zhaolingtie.vue')
+    path:'/CreateAsk',
+    name:'CreateAsk',
+    component:() => import('../views/CreateAsk.vue')
   },
   {
-    path:'/Xunwutie',
-    name:'Xunwutie',
-    component:() => import('../views/Xunwutie.vue')
+    path:'/MyMessage',
+    name:'MyMessage',
+    component:() => import('../views/MyMessage.vue')
   },
   {
-    path:'/Pipeitongzhi',
-    name:'Pipeitongzhi',
-    component:() => import('../views/Pipeitongzhi.vue')
-  },
-  {
-    path:'/Wodefabu',
-    name:'Wodefabu',
-    component:() => import('../views/Wodefabu.vue')
+    path:'/MyPublish',
+    name:'MyPublish',
+    component:() => import('../views/MyPublish.vue')
   },
   {
 		path:'/login',
@@ -80,8 +75,6 @@ router.beforeEach((to,from,next)=>{
     else{
       if(store.state.userInfo==null){
         var token = store.state.token
-        console.log(token)
-        console.log(store.state.userInfo)
         store.dispatch("getUserInfo",token).then(res=>{
           next();
         }).catch((err)=>{

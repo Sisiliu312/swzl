@@ -323,7 +323,6 @@ export default {
     },
     //更换种类id
     checkCategory() {
-      console.log(this.categoryId);
       this.$store.commit("SET_CATEGORYID", this.categoryId);
     },
     // 更换校区
