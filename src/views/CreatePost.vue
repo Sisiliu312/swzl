@@ -291,8 +291,8 @@ export default {
       this.post.tags = "";
       this.chose2After = false;
     },
-    toXinjian: function () {
-      this.$router.push("/Xinjian");
+    toXinjian() {
+      this.$router.go(-1);
     },
 
     // 发布帖子

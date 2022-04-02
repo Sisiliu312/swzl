@@ -36,13 +36,13 @@ export default {
         }
     },
     methods:{
-        toZhaolingtie:function(){
-            this.$router.push('/Zhaolingtie')
+        toZhaolingtie(){
+            this.$router.push('/CreatePost')
         },
-        toXunwutie:function(){
-            this.$router.push('/Xunwutie')
+        toXunwutie(){
+            this.$router.push('/CreateAsk')
         },
-        toHome:function(){
+        toHome(){
             this.$router.push('/Home')
         }
     },

@@ -229,7 +229,7 @@ export default {
       this.chose2After = false;
     },
     toXinjian: function () {
-      this.$router.push("/Xinjian");
+      this.$router.go(-1)
     },
 
     // 发布帖子
