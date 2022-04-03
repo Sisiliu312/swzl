@@ -12,11 +12,11 @@
       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
 
-    <br>
+    <br />
     更改用户名
     <el-input v-model="user.username" placeholder="请输入内容"></el-input>
 
-    <br>
+    <br />
     更改密码
     <el-input v-model="user.password" placeholder="请输入内容"></el-input>
 
@@ -29,19 +29,20 @@ import { updateUserInfo } from "@/api/user";
 export default {
   data() {
     return {
-      user:{
-          avatar:'',
-          username:'',
-          password:'',
-          id:''
-      }
+      user: {
+        avatar: "",
+        username: "",
+        password: "",
+        id: "",
+      },
     };
   },
   methods: {
+    // 头像上传成功返回地址
     handleAvatarSuccess(res, file) {
-      console.log(file.response)
       this.user.avatar = file.response;
     },
+    // 更新头像前检查图片
     beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";
       const isLt2M = file.size / 1024 / 1024 < 2;
@@ -53,16 +54,39 @@ export default {
       }
       return isJPG && isLt2M;
     },
-    updateUser(){
-        updateUserInfo(this.user)
-        this.$store.dispatch('getUserInfo',this.$store.state.token)
-        this.$router.go(-1)
-    }
+    // 更新用户按钮
+    updateUser() {
+      //请求后端更新请求
+      updateUserInfo(this.user).then((res) => {
+        if (res.data.state === 200) {
+          // 修改vuex的状态信息
+          this.user.password=''
+          this.$store.state.userInfo = this.user;
+
+          //弹窗修改成功 并返回用户
+          this.$message({
+            type: "success",
+            message: `修改成功`,
+          })
+          setTimeout(() => {
+            this.$router.go(-1);
+          }, 500)
+
+        } else {
+          // 弹窗错误
+          this.$message({
+              type: "error",
+              message: `${res.data.msg}`,
+            });
+        }
+      });
+    },
   },
   created() {
     this.user.avatar = this.$store.state.userInfo.avatar;
-    this.user.id=this.$store.state.userInfo.id
-    this.user.username=this.$store.state.userInfo.username
+    this.user.id = this.$store.state.userInfo.id;
+    this.user.username = this.$store.state.userInfo.username;
+    this.user.token=this.$store.state.userInfo.token
   },
 };
 </script>
