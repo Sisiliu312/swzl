@@ -3,7 +3,7 @@
     点击修改图片
     <el-upload
       class="avatar-uploader"
-      action="http://localhost:8888/upload"
+      action="http://120.53.120.80:8080/upload"
       :show-file-list="false"
       :on-success="handleAvatarSuccess"
       :before-upload="beforeAvatarUpload"
@@ -39,6 +39,7 @@ export default {
   },
   methods: {
     handleAvatarSuccess(res, file) {
+      console.log(file.response)
       this.user.avatar = file.response;
     },
     beforeAvatarUpload(file) {
@@ -55,6 +56,7 @@ export default {
     updateUser(){
         updateUserInfo(this.user)
         this.$store.dispatch('getUserInfo',this.$store.state.token)
+        this.$router.go(-1)
     }
   },
   created() {
