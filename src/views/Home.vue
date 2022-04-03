@@ -167,7 +167,7 @@ export default {
     load() {
       this.loading = true;
       setTimeout(() => {
-        if(this.$store.state.campus!=''){
+        if(this.$store.state.campus===0||this.$store.state.campus===1){
             this.getPostByCampus(this.$store.state.campus, this.currentPage+1);
         }
         if(this.$store.state.categoryId!=''){
@@ -176,7 +176,7 @@ export default {
         if(this.$store.state.date!=''){
           this.getPostByDate(this.$store.state.date, this.currentPage+1);
         }
-        if(this.$store.state.campus==''&&this.$store.state.categoryId==''&&this.$store.state.date==''){
+        if(!(this.$store.state.campus===0)&&!(this.$store.state.campus===1)&&this.$store.state.categoryId==''&&this.$store.state.date==''){
           this.getPosts(this.currentPage + 1);
         }
         this.loading = false;
