@@ -522,11 +522,11 @@ svg {
   height: 40px;
 }
 .sure {
-  width: 39px;
+  width: auto;
   color: #589788;
   border: #589788 1px solid;
   font-size: 0.8rem;
-  padding: 4px 6px;
+  padding: 4px 10px;
   margin: auto;
   margin-left: 0px;
   margin-right: 0px;

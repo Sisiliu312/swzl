@@ -64,30 +64,31 @@
       <!-- 详细信息 -->
       <div class="detail-message">
         <div class="zi2">详细特征</div>
-        <div class="basic-box">
-          <div class="tu6"></div>
-
-          <el-select v-model="selectedTag" placeholder="请选择标签">
-            <el-option
-              v-for="tag in tagList"
-              :key="tag.index"
-              :label="tag.tagName"
-              :value="tag.tagName"
-            >
-            </el-option>
-          </el-select>
-
-          <!-- 点击后出现标签详情 -->
-
-          <div class="zi3" @click="toShowTagContent(selectedTag)">
-            请选择{{ selectedTag }}
+        <div class="basic-box0">
+          <div class="chosebrand">
+            <div class="tu6"></div>
+            <el-select v-model="selectedTag" placeholder="请选择标签">
+              <el-option
+                v-for="tag in tagList"
+                :key="tag.index"
+                :label="tag.tagName"
+                :value="tag.tagName"
+              >
+              </el-option>
+            </el-select>
+          </div>
+          <div class="brandcolor">
+              <!-- 点击后出现标签详情 -->
+              <div class="zi311" @click="toShowTagContent(selectedTag)">
+                请选择标签{{ selectedTag }}
+              </div>
+              <!-- 选择后改变 -->
+              <div class="choseAfter" v-show="chose2After">
+                <div class="choseAfter1">{{ this.post.tags }}</div>
+                <div class="choseAgain" @click="resetTag">(点击重置标签)</div>
+              </div>
           </div>
 
-          <!-- 选择后改变 -->
-          <div class="choseAfter" v-show="chose2After">
-            <div class="choseAfter1">{{ this.post.tags }}</div>
-            <div class="choseAgain" @click="resetTag">(点击重置标签)</div>
-          </div>
         </div>
 
         <div class="box3" v-show="otherDescription">
@@ -129,10 +130,17 @@
         </div>
       </div>
 
+      <!-- 发布按钮 -->
+    <div class="bottom">
+      <div v-bind:class="isZi6 ? 'zi6' : 'zi60'" @click="publish()">发 布</div>
+    </div>
+
       <!-- 联系方式 -->
       <div class="middle4">
         <div class="zi2">联系方式</div>
         <div class="basic-box">
+          <div class="tu11"></div>
+          <div class="zi3">联系方式</div>
           <input
             class="item0"
             placeholder="请填写您的联系方式"
@@ -143,14 +151,15 @@
       </div>
     </div>
 
-    <!-- 发布按钮 -->
-    <div class="bottom">
-      <div v-bind:class="isZi6 ? 'zi6' : 'zi60'" @click="publish()">发 布</div>
-    </div>
+    
 
     <!-- 一级类别 -->
     <div class="mask" v-show="showCategoryOne"></div>
     <div class="menu1" v-show="showCategoryOne">
+        <div class="menu1-top">
+          <div class="menu1-img" @click="notShow"></div>
+          <div class="menu1-word">请选择物品类别</div>
+        </div>
       <div>
         <el-radio-group v-model="categoryOneId">
           <el-radio-button
@@ -168,7 +177,7 @@
     </div>
 
     <!-- 二级类别 -->
-    <div class="mask" v-show="showCategoryTwo"></div>
+    <div class="mask" v-show="showCategoryTwo" @click="confirmCategory()"></div>
     <div class="menu3" v-show="showCategoryTwo">
       <div class="menu1-top">
         <div class="menu1-img" @click="notShow"></div>
@@ -196,7 +205,7 @@
     <div class="menu6" v-show="showTagContent">
       <div class="menu1-top">
         <div class="menu1-img" @click="notShow"></div>
-        <div class="menu1-word">请选择</div>
+        <div class="menu1-word">请选择输入卡号</div>
       </div>
       <div class="menu6-middle">
         <div v-if="selectedTag=='卡号'">
@@ -371,6 +380,7 @@ export default {
       this.showCategoryOne = false;
     },
     notShow: function () {
+      this.showCategoryOne=false;
       this.showCategoryTwo = false;
       this.isShow4 = false;
       this.isShow5 = false;
@@ -481,6 +491,7 @@ body {
   width: 100%;
 }
 .zi2 {
+  height: 30px;
   margin: 20px;
   margin-left: 30px;
   font-size: 1.3rem;
@@ -495,6 +506,24 @@ body {
   flex-direction: row;
   margin: 3px;
 }
+.basic-box0{
+  height: 80px;
+  width: 100%;
+  display: flex;
+  flex-direction:column;
+  margin: 3px;
+}
+.chosebrand{
+  height: 100px;
+  width: 100%;
+  display: flex;
+}
+.brandcolor{
+  height: 100px;
+  width: 100%;
+  margin:0px 0px 0px 30px;
+  display: flex;
+}
 .tu2 {
   height: 20px;
   width: 20px;
@@ -506,6 +535,14 @@ body {
 }
 .zi3 {
   width: 80px;
+  margin-left: 3px;
+  color: #4e4e4e;
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-top: 6.5px;
+}
+.zi311 {
+  width: 120px;
   margin-left: 3px;
   color: #4e4e4e;
   font-size: 0.9rem;
@@ -800,7 +837,7 @@ body {
   height: 60px;
   width: 100%;
   background-color: white;
-  position: fixed;
+  position: absolute;
   bottom: 0px;
   z-index: 3;
 }
@@ -812,7 +849,6 @@ body {
   margin-right: 30px;
   border-radius: 30px;
   text-align: center;
-  -top: 10px;
   color: #fdfefe;
   font-size: 1.1rem;
   font-weight: bold;
@@ -825,7 +861,6 @@ body {
   margin-right: 30px;
   border-radius: 30px;
   text-align: center;
-  -top: 10px;
   color: #fdfefe;
   font-size: 1.1rem;
   font-weight: bold;
@@ -843,10 +878,10 @@ body {
 }
 /* 菜单1*/
 .menu1 {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   z-index: 4;
-  height: 55%;
+  height: 35%;
   width: 100%;
   background-color: #edf3f2;
   border-radius: 20px 20px 0px 0px;
@@ -875,6 +910,7 @@ body {
 }
 
 .menu1-bottom {
+  height: 30px;
   margin-top: 20px;
   margin-left: 80%;
   color: #17a697;
@@ -910,15 +946,14 @@ body {
 }
 /* 卡或证件 */
 .menu3 {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   z-index: 4;
-  height: 43%;
+  height: auto;
   width: 100%;
   background-color: #edf3f2;
   border-radius: 20px 20px 0px 0px;
 }
-
 /* 电子产品 */
 .menu2 {
   position: fixed;
@@ -931,6 +966,7 @@ body {
 }
 
 .menu2-bottom {
+  height: 50px;
   margin-top: 20px;
   font-weight: medium;
   display: flex;
@@ -948,21 +984,22 @@ body {
 
 /* 物品颜色 */
 .menu6 {
-  position: fixed;
+  height: auto;
+  width: 100%;
+  position: absolute;
   bottom: 0;
   z-index: 4;
-  height: 50%;
   left: 0;
   right: 0;
   background-color: #edf3f2;
   border-radius: 20px 20px 0px 0px;
 }
-.menu6-middle {
+/* .menu6-middle {
   width: 100%;
   height: 200px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-}
+} */
 </style>

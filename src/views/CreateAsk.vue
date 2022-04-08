@@ -75,20 +75,22 @@
             <div class="choseAgain" @click="resetTag">(点击重置标签)</div>
           </div>
         </div>
-
-
       </div>
-
+      <!-- 发布按钮 -->
+      <div class="bottom">
+        <div v-bind:class="isZi6 ? 'zi6' : 'zi60'" @click="publish()">发 布</div>
+      </div>
     </div>
 
-    <!-- 发布按钮 -->
-    <div class="bottom">
-      <div v-bind:class="isZi6 ? 'zi6' : 'zi60'" @click="publish()">发 布</div>
-    </div>
+    
 
     <!-- 一级类别 -->
     <div class="mask" v-show="showCategoryOne"></div>
     <div class="menu1" v-show="showCategoryOne">
+      <div class="menu1-top">
+          <div class="menu1-img" @click="notShow"></div>
+          <div class="menu1-word">请选择物品类别</div>
+      </div>
       <div>
         <el-radio-group v-model="categoryOneId">
           <el-radio-button
@@ -384,7 +386,7 @@ body {
   width: 100%;
 }
 .main {
-  height: auto;
+  height: 101%;
   width: 100%;
   position: absolute;
   top: 90px;
@@ -717,11 +719,11 @@ body {
   background-color: #589788;
 }
 .bottom {
+  position: absolute;
+  bottom: 0px;
   height: 60px;
   width: 100%;
   background-color: white;
-  position: fixed;
-  bottom: 0px;
   z-index: 3;
 }
 .zi6 {
@@ -766,7 +768,7 @@ body {
   position: fixed;
   bottom: 0;
   z-index: 4;
-  height: 55%;
+  height: 65%;
   width: 100%;
   background-color: #edf3f2;
   border-radius: 20px 20px 0px 0px;
@@ -885,4 +887,5 @@ body {
   justify-content: space-around;
   align-items: center;
 }
+
 </style>

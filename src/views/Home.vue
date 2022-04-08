@@ -83,6 +83,16 @@
       </div>
     </div>
 
+    <!-- 页面找不到 -->
+  <div class="page2" v-show="isPage2">
+    <div class="page2-img"></div>
+    <div class="page2-item1">很遗憾没有找到相关物品，</div>
+    <div class="page2-item2">
+      <div class="item2-word">建议更换关键词或发布</div>
+      <div class="item2-button" @click="toXunwutie">寻物帖</div>
+    </div>
+  </div>
+
     <Bottom />
   </body>
 </template>
@@ -104,6 +114,8 @@ export default {
   },
   data() {
     return {
+      // 页面找不到
+      isPage2:false,
       posts: [
         // {
         //   id: Number,
@@ -165,6 +177,9 @@ export default {
     this.getPosts(this.currentPage);
   },
   methods: {
+    toXunwutie:function(){
+      this.$router.push('/Xunwutie')
+    },
     // 触发加载
     load() {
       this.loading = true;
@@ -393,5 +408,44 @@ body {
   background-size: 100% 100%;
   top: -60px;
   left: 185px;
+}
+
+/* 页面找不到 */
+.page2{
+  height: 100vh;
+  padding:0 6%;
+  padding-top: 160px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.page2-img{
+  height: 200px;
+  width: 200px;
+  background: url("../assets/yemianzhaobudao.png");
+  background-size: 100% 100%;
+}
+.page2-item1{
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #6C6C6C;
+}
+.page2-item2{
+  display: flex;
+}
+.item2-word{
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #6C6C6C;
+  padding-top: 20px;
+}
+.item2-button{
+  margin: 15px 6px;
+  padding: 6px 10px;
+  border: 1.5px #589788 solid;
+  border-radius: 55px;
+  color: #589788;
+  font-weight: bold;
+  font-size: 0.9rem;
 }
 </style>

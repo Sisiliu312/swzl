@@ -66,7 +66,7 @@
 
       <!-- 日期 -->
       <div class="mask" v-show="isShowDate" @click="notShowDate"></div>
-      <div class="menu2" v-show="isShowDate">
+      <div class="menu3" v-show="isShowDate">
         <div id="l_menu3">
           <div>{{ date1.get("month") + 1 }}月</div>
           <div>
@@ -540,7 +540,17 @@ body {
 }
 /* 类别 */
 .menu2 {
-  height: 150px;
+  height: 220px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  border-radius: 0px 0px 20px 20px;
+  background: rgb(248, 248, 248);
+  z-index: 12;
+}
+.menu3 {
+  height: 170px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -566,7 +576,7 @@ body {
   margin-left: 16px;
 }
 .el-radio-button{
-  margin:10px;
+  margin:7px 40px;
   border:5px;
   font-weight: Bold;
   font-size: 0.9rem;
