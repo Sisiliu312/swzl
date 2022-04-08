@@ -51,13 +51,13 @@ export default {
 
 <style scoped lang="css">
 body{
-    background-color: rgb(244, 244, 244);
+    background-color: #EEEEEE;
     display: flex;
     flex-direction: column;
     position:abslute;
     bottom: -20px;
     width: 100vw;
-    height: 100%;
+    height: 100wh;
     margin: 0px;
 }
 .top1{
@@ -128,9 +128,7 @@ body{
     height: 50px;
 }
 .bottom{
-    width: 100%;
-    height: 20vh;
-    background-color:rgb(244, 244, 244);
+    background-color:#EEEEEE;
     display: flex;
     align-items:center ;
     justify-content: center;
@@ -141,7 +139,7 @@ body{
     position:fixed;
     bottom:0px;
     background: url("../assets/chahao.png");
-    background-color:rgb(244, 244, 244);
+    background-color:#EEEEEE;
     background-size: 100% 100% ;
 }
 

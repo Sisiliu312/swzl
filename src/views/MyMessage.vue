@@ -1,7 +1,7 @@
 <template>
   <body>
     <div class="top1">
-      <div class="tu1" @click="goLastPage"></div>
+      <div class="return" @click="goLastPage"></div>
       <div class="top1-box">匹配通知</div>
     </div>
 
@@ -43,11 +43,11 @@
         <!-- 内容盒子 -->
         <div class="box">
           <!-- 图片部分 -->
-          <div class="tu" @click="goPostDetail(post.id)">
+          <div class="tu">
             <img style="width: 100px; height: 100px" :src="post.images" />
           </div>
           <!-- 文字部分 -->
-          <div class="wen" @click="goPostDetail(post.id)">
+          <div class="wen">
             <div class="label">
               <div class="label1">#{{ post.categoryName }}</div>
               <div class="label1" v-for="t in post.tag" :key="t.index">
@@ -56,10 +56,11 @@
             </div>
             <div class="box1">
               <div class="time1">拾获时间: {{ post.created | format }}</div>
+              <div class="more" @click="goPostDetail(post.id)"></div>
             </div>
             <div class="place">拾获地点: {{ post.findLocation }}</div>
           </div>
-          <div class="new" v-show="xin1">new!</div>
+          <!-- <div class="new" v-show="xin1">new!</div> -->
           <div class="delete" @click="delete1(post.id)">删除</div>
         </div>
       </div>
@@ -147,7 +148,7 @@ body {
   color: #589788;
   font-family: SourceHanSansCN-Bold;
 }
-.tu1 {
+.return{
   height: 15px;
   width: 8px;
   background: url("../assets/lvsejiantou.png");
@@ -163,7 +164,7 @@ body {
   align-items: center;
 }
 .box0 {
-  height: 18vh;
+  height: 15vh;
   width: 100%;
   margin-bottom: 20px;
 }
@@ -271,5 +272,15 @@ svg {
   font-size: 0.8rem;
   color: #d9534f;
   font-weight: bold;
+}
+.more {
+  background: url("../assets/more.png");
+  background-size: 100% 100%;
+  width: 10px;
+  height: 15px;
+  margin-top: 18px;
+  position: absolute;
+  top: 40px;
+  right: 5px;
 }
 </style>

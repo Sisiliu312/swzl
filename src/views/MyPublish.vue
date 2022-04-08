@@ -59,10 +59,10 @@
         </svg>
 
         <div class="box">
-          <div class="tu" @click="goPostDetail(post.id)">
+          <div class="tu">
             <img :src="post.images" style="width: 100px; height: 100px" />
           </div>
-          <div class="wen" @click="goPostDetail(post.id)">
+          <div class="wen">
             <div class="label">
               <div class="label1">#{{ post.categoryName }}</div>
               <div
@@ -75,12 +75,12 @@
             </div>
             <div class="box1">
               <div class="time1">拾获时间: {{ post.created | format }}</div>
-              <div class="more"></div>
+              <div class="more" @click="goPostDetail(post.id)"></div>
             </div>
             <div class="place">拾获地点: {{ post.findLocation }}</div>
             <div class="delete" @click="deletePost(post.id)">删除</div>
           </div>
-          <div class="new" v-show="xin1">new!</div>
+          <!-- <div class="new" v-show="xin1">new!</div> -->
         </div>
       </div>
     </div>
@@ -266,9 +266,9 @@ body {
   font-family: SourceHanSansCN-Bold;
 }
 .retrun {
-  background-color: rgb(252, 19, 19);
   height: 15px;
   width: 8px;
+  background: url("../assets/lvsejiantou.png");
   background-size: 100% 100%;
   margin-top: 20px;
 }
@@ -287,7 +287,7 @@ body {
 }
 .box {
   padding: 12px;
-  height: 100%;
+  height: 82%;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -350,6 +350,7 @@ svg {
 }
 .tu {
   width: 100px;
+  height: 100px;
   background-color: rgb(244, 244, 244, 244);
   border-radius: 10px;
 }
