@@ -13,7 +13,7 @@
         <div class="niicheng">{{ username }}</div>
         <div class="xuehao">{{ studentNumber }}</div>
       </div>
-      <div class="changeinf" @click="editInfo">点击修改个人信息</div>
+      <!-- <div class="changeinf" @click="editInfo">点击修改个人信息</div> -->
       <!-- <el-button class="edit" type="primary" icon="el-icon-edit" @click="editInfo">点击修改个人信息</el-button> -->
     </div>
 
@@ -33,20 +33,20 @@
     <!-- 网页说明 -->
     <div class="instruction">
       <div class="item">
-        <div class="list" @click="tosysm">使用方法</div>
-        <div class="jiantou"></div>
+        <div class="list" >使用方法</div>
+        <div class="jiantou" @click="tosysm"></div>
       </div>
       <div class="item">
         <div class="list">问题反馈</div>
         <div class="jiantou"></div>
       </div>
       <div class="item">
-        <div class="list">关于我们</div>
-        <div class="jiantou"></div>
+        <div class="list" >修改信息</div>
+        <div class="jiantou" @click="editInfo"></div>
       </div>
-      <div class="item" @click="toCheck">
+      <div class="item" >
         <div class="list">检查更新</div>
-        <div class="jiantou"></div>
+        <div class="jiantou" @click="toCheck"></div>
       </div>
     </div>
       <el-button type="danger" @click="logout">退出登录</el-button>
@@ -114,6 +114,10 @@ export default {
     },
     toCheck() {
       this.isCheck = true;
+      let that = this;
+      setTimeout(function () {
+                that.isCheck=false
+            }, 2000)
     },
     tosysm() {
       this.sysm = true;

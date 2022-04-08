@@ -307,6 +307,7 @@ body {
   height: 16vh;
   width: 100%;
   border-radius: 10px;
+  border-radius: 20px;
   box-shadow: 5px 5px rgba(0.2, 20, 0.2, 0.2);
   display: flex;
   background-color: rgb(255, 255, 255);
@@ -322,14 +323,15 @@ body {
 }
 /* 物品图 */
 .picture{
-  height: 100px;
-  width: 100px;
-  margin:18px 10px 18px 18px;
+  height: 120px;
+  width: 110px;
+  margin:18px 0px 18px 18px;
 }
 /* 校区图 */
 .icon{
   position: relative;
   top: -143px;
+  top: -161px;
   left: 10px;
 }
 .content .tag .tag-name {
@@ -360,6 +362,7 @@ body {
   height: 25px;
   width: 180px;
   margin:10px 10px 5px 5px;
+  margin:20px 10px 10px 0px;
   font-size: 1rem;
   font-weight: medium;
   color: #6C6D6D;
@@ -370,6 +373,7 @@ body {
   height: 25px;
   width: 180px;
   margin:0px 10px 10px 5px;
+  margin:10px 10px 10px 0px;
   font-size: 1rem;
   font-weight: medium;
   color: #6C6D6D;
@@ -387,7 +391,7 @@ body {
   height: 17px;
   background: url("../assets/more.png");
   background-size: 100% 100%;
-  top: -55px;
+  top: -60px;
   left: 185px;
 }
 </style>
