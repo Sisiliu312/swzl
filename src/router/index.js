@@ -58,7 +58,12 @@ const routes=[
 		path:'/EditInfo',
     name:'EditInfo',
 		component: r=>require.ensure([],()=>r(require('@/views/EditInfo')),'EditInfo')
-	}
+	},
+  {
+		path:'/FeedbackQ',
+    name:'FeedbackQ',
+		component: r=>require.ensure([],()=>r(require('@/views/FeedbackQ')),'FeedbackQ')
+	},
 ]
 const router =new VueRouter({
     routes

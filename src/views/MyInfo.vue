@@ -36,7 +36,7 @@
         <div class="list" >使用方法</div>
         <div class="jiantou" @click="tosysm"></div>
       </div>
-      <div class="item">
+      <div class="item"  @click="feedbackQ">
         <div class="list">问题反馈</div>
         <div class="jiantou"></div>
       </div>
@@ -133,6 +133,9 @@ export default {
     },
     editInfo(){
         this.$router.push('/EditInfo')
+    },
+    feedbackQ(){
+        this.$router.push('/FeedbackQ')
     }
   },
   created() {
