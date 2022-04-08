@@ -2,30 +2,26 @@
   <body>
     <!-- header -->
     <div class="top">
-      <div class="top1"></div>
       <div class="top2">个人中心</div>
     </div>
     <!-- 用户信息 -->
     <div class="user-info">
-      <div class="touxiang">
         <div class="tu">
           <img :src="avatar" />
-        </div>
       </div>
       <div class="zi">
         <div class="niicheng">{{ username }}</div>
         <div class="xuehao">{{ studentNumber }}</div>
       </div>
-
-      <el-button class="edit" type="primary" icon="el-icon-edit" @click="editInfo">点击修改个人信息</el-button
-      >
+      <div class="changeinf" @click="editInfo">点击修改个人信息</div>
+      <!-- <el-button class="edit" type="primary" icon="el-icon-edit" @click="editInfo">点击修改个人信息</el-button> -->
     </div>
 
     <!-- 匹配通知和我的发布 -->
     <div class="message-and-publish">
       <div class="box" @click="toPipeitongzhi">
         <div class="tuleft"></div>
-        <div class="new" v-show="isNew"></div>
+        <!-- <div class="new" v-show="isNew"></div> -->
         <div class="zi1">匹配通知</div>
       </div>
       <div class="box" @click="toWodefabu">
@@ -53,9 +49,7 @@
         <div class="jiantou"></div>
       </div>
     </div>
-
-    <el-button type="danger" @click="logout">退出登录</el-button>
-
+      <el-button type="danger" @click="logout">退出登录</el-button>
     <!-- 弹窗展示使用方法 -->
     <div class="mask" v-show="sysm"></div>
     <div class="shiyongshuoming" v-show="sysm">
@@ -145,25 +139,16 @@ export default {
 </script>
 
 <style scoped lang="css">
-html {
-  height: 100%;
-  width: 100%;
-}
 body {
-  margin: 0px;
-  height: 100%;
+  height:100%;
   width: 100%;
   display: flex;
   flex-direction: column;
   background: rgb(246, 243, 243);
 }
-/* .top1{
-    background-color: white;
-    height:30px;
-} */
 .top2 {
   background-color: white;
-  height: 40px;
+  padding:25px 0px 15px 0px;
   text-align: center;
   font-weight: Bold;
   font-size: 1.4rem;
@@ -173,7 +158,7 @@ body {
 .user-info {
   width: 100%;
   background-color: #589788;
-  height: 135px;
+  height: 20%;
   display: flex;
   flex-direction: row;
 }
@@ -182,32 +167,32 @@ body {
   margin-top: 50px;
 }
 .tu {
-  margin-top: 25px;
-  margin-left: 50px;
-  width: 80px;
-  height: 80px;
-  background-color: rgb(240, 233, 233);
-  border-radius: 50px;
-  overflow: hidden;
+  height: 90px;
+  width: 90px;
+  padding: 20px 20px 20px 60px;
 }
 .tu > img {
   height: 100%;
   width: 100%;
+  border-radius: 50px;
+  overflow: hidden;
 }
 .zi {
-  height: 70px;
-  width: 80px;
-  margin-top: 40px;
-  padding-top: 9px;
-  padding-left: 10px;
-  font-family: SourceHanSansCN-Medium;
+  margin: 40px 10px;
   color: white;
-  font-size: 1rem;
+  font-size: 1.2rem;
   text-align: center;
+  white-space:nowrap;
+  color: #E5E5E5;
+  font-weight: medium;
+  white-space:nowrap;
+}
+.changeinf{
+  width:90px;
 }
 .message-and-publish {
   box-shadow: 5px 5px 3px rgba(0.2, 20, 20, 0.2);
-  height: 100px;
+  height:100px;
   background-color: white;
   display: flex;
   flex-direction: row;
@@ -224,7 +209,7 @@ body {
 .tuleft {
   background: url("../assets/pipeitongzhi.png");
   background-size: 100% 100%;
-  margin-top: 20px;
+  margin-top: 25px;
   margin-right: 18px;
   margin-bottom: 10px;
   margin-left: 70px;
@@ -234,7 +219,7 @@ body {
 .turight {
   background: url("../assets/wodefabu.png");
   background-size: 100% 100%;
-  margin-top: 20px;
+  margin-top: 25px;
   margin-left: 18px;
   margin-bottom: 10px;
   margin-right: 50px;
@@ -253,13 +238,13 @@ body {
 }
 .instruction {
   box-shadow: 5px 5px 2px rgba(0, 0, 0, 0.1);
-  height: 220px;
+  height: 250px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   background-color: white;
   border-radius: 10px;
-  margin: 6px;
+  margin: 6px 6px 40px 6px;
 }
 .item {
   display: flex;
@@ -294,7 +279,8 @@ body {
   bottom: 66px;
   left: 28.5%;
 }
-.new {
+
+/* .new {
   height: 8.5px;
   width: 8.5px;
   background-color: #f94d5d;
@@ -302,7 +288,7 @@ body {
   position: absolute;
   left: 35.5%;
   top: 32%;
-}
+} */
 
 /* 使用方法 */
 .mask {

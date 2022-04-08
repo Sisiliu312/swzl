@@ -1,7 +1,7 @@
 <template>
   <body>
     <div class="top1">
-      <div class="tu1" @click="goLastPage"></div>
+      <div class="return" @click="goLastPage"></div>
       <div class="top1-box">匹配通知</div>
     </div>
 
@@ -147,7 +147,7 @@ body {
   color: #589788;
   font-family: SourceHanSansCN-Bold;
 }
-.tu1 {
+.return{
   height: 15px;
   width: 8px;
   background: url("../assets/lvsejiantou.png");

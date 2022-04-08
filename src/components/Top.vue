@@ -51,7 +51,7 @@
       <div class="mask" v-show="isShowCategory" @click="notShowCategory"></div>
       <div class="menu2" v-show="isShowCategory">
         <div class="box1">
-          <div>
+          <div class="label.category">
             <el-radio-group v-model="categoryId" @change="checkCategory()">
               <el-radio-button
                 v-for="category in categories"
@@ -414,7 +414,7 @@ body {
   padding: 0px;
   box-sizing: border-box;
   display: flex;
-  height: 50px;
+  height: 49px;
   width: 100%;
   background-color: #ffffff;
   justify-content: space-around;
@@ -538,7 +538,7 @@ body {
   margin-top: 3px;
   margin-left: 20px;
 }
-
+/* 类别 */
 .menu2 {
   height: 150px;
   width: 100%;
@@ -553,7 +553,7 @@ body {
   padding: 0px;
   display: flex;
   margin: 0px;
-  height: 50px;
+  height: 17.5vh;
   flex-direction: row;
   justify-content: space-evenly;
   justify-content: space-around;
@@ -564,6 +564,13 @@ body {
   color: #589788;
   margin-top: 5px;
   margin-left: 16px;
+}
+.el-radio-button{
+  margin:10px;
+  border:5px;
+  font-weight: Bold;
+  font-size: 0.9rem;
+  color: #589788;
 }
 /* menu3时间 */
 #l_menu3 {
