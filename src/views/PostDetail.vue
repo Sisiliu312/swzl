@@ -46,8 +46,10 @@
             <div class="number">{{ post.contact }}</div>
           </div>
         </div>
+        <div class="bottom"></div>
       </div>
     </div>
+    
   </body>
 </template>
 
@@ -118,9 +120,9 @@ export default {
 
 <style scoped lang="css">
 body {
-  margin: 0px;
-  height: auto;
+  height: 100%;
   width: 100%;
+  margin: 0px;
   display: flex;
   flex-direction: column;
 }
@@ -241,7 +243,7 @@ body {
   color: white;
 }
 .box {
-  height: 270px;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -291,5 +293,10 @@ body {
   color: #a6a6a6;
   font-size: medium;
   font-size: 0.9rem;
+}
+.bottom{
+  width: 100%;
+  height: 250px;
+  background: white;
 }
 </style>
