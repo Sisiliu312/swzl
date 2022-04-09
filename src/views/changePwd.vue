@@ -3,33 +3,14 @@
         <div id="header">
             <div>
                 <div class="return" @click="toBackView"></div>
-                <div class="header-message">个人信息更改</div>
+                <div class="header-message">密码修改</div>
+                <div class="saveBtn" @click="saveFn">保存</div>
             </div>
         </div>
         <div id="mainBox">
-        	<div id="headPicBox">
-            	<div class="headPicContainer">
-              		<img :src="user.avatar">
-              		<div class="camera_icon"></div>
-              		<input class="tu5" type="file" name="file" @change="addImage" />
-           	 	</div>
-          	</div>
-			<div id="optsBox">
-				<div class="userOpt" @click="TouserOpt">
-					<span>用户名</span>
-					<div class="infoBox">
-						<div>啊顶顶顶</div>
-						<div class="arry_icon"></div>
-					</div>
-				</div>
-				<div class="pwdOpt" @click="TopwdOpt">
-					<span>密码修改</span>
-					<div class="infoBox">
-						<div>啊顶顶顶</div>
-						<div class="arry_icon"></div>
-					</div>
-				</div>
-			</div>
+        	<div class="inputBarBox">
+                <input placeholder="密码修改" id="inputBar" type="text" v-model="inputVal">
+            </div>
         </div>
     </div>
 </template>
@@ -45,9 +26,13 @@ export default {
         password: "",
         id: "",
       },
+      inputVal:'',
     };
   },
   methods: {
+    saveFn(){
+        alert(this.inputVal)
+    },
     addImage(e){
         let formdata = new FormData();
         Array.from(e.target.files).map((item) => {
@@ -60,12 +45,7 @@ export default {
 	toBackView() {
 		this.$router.go(-1)
 	},
-	TouserOpt(){
-		this.$router.push("/changeUser");
-	},
-	TopwdOpt(){
-		this.$router.push("/changePwd");
-	},
+	
 
 
 
@@ -122,66 +102,23 @@ export default {
 };
 </script>
 
-<style scoped lang="css">
-	#optsBox{
-		border-radius: 6px;
-		padding: 0 20px;
-		box-shadow: 0 0 3px #ccc;
-		background-color: #fff;
-	}
-	#optsBox>div{
-		height: 56px;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		border-bottom: solid 1.2px #ddd;
-		font-size: 12px;
-	}
-	#optsBox>div:last-child{
-		border: none
-	}
-	.infoBox{
-		display: flex;
-		align-items: center;
-		color: #666;
-	}
-	.arry_icon{
-		height: 30px;
-		width: 30px;
-		background: url("../assets/huisejiantou.png") center center / 40% no-repeat;
-	}
-	
-	#headPicBox{
-		height: 260px;
-		width: 100%;
-		/* background-color: #fff; */
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-	#headPicBox>.headPicContainer{
-		height: 80px;
-		width: 80px;
-		border-radius: 40px;
-		box-shadow: 2px 3px 4px #aaa;
-		background-color: rgb(229,229,229);
-		position: relative;
-	}
-	.headPicContainer>img{
-		position: absolute;
-		height: 80px;
-		width: 80px;
-		border-radius: 40px;
-	}
-	.headPicContainer>.camera_icon{
-		position: absolute;
-		right: 4px;
-		bottom: 4px;
-		height: 22px;
-		width: 22px;
-		background: url("../assets/camera.png") center center / 100% no-repeat;
-	}
 
+
+
+<style scoped lang="css">
+	.inputBarBox{
+        /* width: 100%; */
+        height: 60px;
+        padding: 20px;
+    }
+    #inputBar{
+        width: 100%;
+        height: 30px;
+        outline-style: none;
+		border: 0;
+        border-bottom: solid 2px #ccc;
+        background-color: unset;
+    }
 
 
 
@@ -245,5 +182,11 @@ export default {
         font-size: 1.3rem;
         color: rgb(108, 176, 154);
         font-family: SourceHanSansCN-Bold;
+    }
+    .saveBtn{
+        position: absolute;
+        right: 12px;
+        font-size: 13px;
+        color: rgb(114, 174, 153);
     }
 </style>

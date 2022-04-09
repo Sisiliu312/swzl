@@ -51,11 +51,14 @@ export default {
             alert(this.textVal + '  此处写接口')
         },
         addImage(e){
+            console.log(e.target.files)
             let formdata = new FormData();
             Array.from(e.target.files).map((item) => {
                 formdata.append("file", item);
             });
+            console.log(formdata)
             upload(formdata).then((res) => {
+                console.log(res.data)
                 this.imgList.push(res.data)
             });
         },

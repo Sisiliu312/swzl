@@ -32,21 +32,21 @@
 
     <!-- 网页说明 -->
     <div class="instruction">
-      <div class="item">
+      <div class="item" @click="tosysm">
         <div class="list" >使用方法</div>
-        <div class="jiantou" @click="tosysm"></div>
+        <div class="jiantou"></div>
       </div>
       <div class="item"  @click="feedbackQ">
         <div class="list">问题反馈</div>
         <div class="jiantou"></div>
       </div>
-      <div class="item">
+      <div class="item" @click="editInfo">
         <div class="list" >修改信息</div>
-        <div class="jiantou" @click="editInfo"></div>
+        <div class="jiantou"></div>
       </div>
-      <div class="item" >
+      <div class="item" @click="toCheck">
         <div class="list">检查更新</div>
-        <div class="jiantou" @click="toCheck"></div>
+        <div class="jiantou"></div>
       </div>
     </div>
       <el-button type="danger" @click="logout">退出登录</el-button>

@@ -64,6 +64,16 @@ const routes=[
     name:'FeedbackQ',
 		component: r=>require.ensure([],()=>r(require('@/views/FeedbackQ')),'FeedbackQ')
 	},
+  {
+		path:'/changeUser',
+    name:'changeUser',
+		component: r=>require.ensure([],()=>r(require('@/views/changeUser')),'changeUser')
+	},
+  {
+		path:'/changePwd',
+    name:'changePwd',
+		component: r=>require.ensure([],()=>r(require('@/views/changePwd')),'changePwd')
+	},
 ]
 const router =new VueRouter({
     routes
