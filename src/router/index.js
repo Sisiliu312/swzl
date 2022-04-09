@@ -24,11 +24,11 @@ const routes=[
     name:'PostDetail',
     component:() => import('../views/PostDetail.vue')
   },
-  {
-    path:'/Create',
-    name:'Create',
-    component:() => import('../views/Create.vue')
-  },
+  // {
+  //   path:'/Create',
+  //   name:'Create',
+  //   component:() => import('../views/Create.vue')
+  // },
   {
     path:'/CreatePost',
     name:'CreatePost',

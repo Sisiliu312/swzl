@@ -13,16 +13,33 @@
             <div class="tu3"></div>
             <div class="zi2">我的</div>
         </div>
-    </footer>   
+    </footer>
+	<transition name="opacity">
+		<div id="createBox" v-if="showCreate">
+			<Create/>
+		</div> 
+	</transition>
 </body>
 </template>
 
 <script>
+import Create from "../components/Create.vue";
 export default {
     name: 'bottom',
+	components: {
+		Create
+  	},
+	data(){
+        return{
+            showCreate:false,
+        }
+    },
 	methods:{
+		fatherMethod(){
+			this.showCreate = false
+		},
 		toXinjian:function(){
-			this.$router.push('/Create')
+			this.showCreate = true
 		},
 		toGerenzhongxin:function(){
 			this.$router.push('/MyInfo')
@@ -35,9 +52,32 @@ export default {
 </script>
 
 <style scoped lang="css">
+
+
+.opacity-enter-active, .opacity-leave-active {
+	transition: opacity 1s;
+}
+.opacity-enter, .opacity-leave-to {
+	opacity: 0;
+}
+.opacity-enter-to, .opacity-leave {
+	opacity: 1;
+}
+
+
+#createBox{
+	position: absolute;
+	width: 100%;
+	top: 0;
+	bottom: 0;
+	z-index: 999;
+	/* background-color: red; */
+	/* display: none; */
+}
 body{
 	margin: 0px;
 	width: 100%;
+	/* overflow-x: hidden; */
 }
 footer{
 	width: 100%;

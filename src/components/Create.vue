@@ -1,28 +1,38 @@
 <template>
-    <body>
+    <body id="root">
         <div class="top">
             <div class="top1"></div>
             <div class="top2">新建帖子</div>
         </div>
         <div class="middle">
             <div class="middle1"></div>
-            <div class="middle2" @click="toZhaolingtie">
-                <div class="tu">
-                    <div class="tu1"></div>
+
+            <transition name="move1" appear>
+                <div id="mid1" class="middle2" v-show="aniShow" @click="toZhaolingtie">
+                    <div class="tu">
+                        <div class="tu1"></div>
+                    </div>
+                    <div class="zi">招领帖</div>
                 </div>
-                <div class="zi">招领帖</div>
-            </div>
+            </transition>
+
             <div class="middle3"></div>
-            <div class="middle2" @click="toXunwutie">
-                <div class="tu">
-                    <div class="tu2"></div>
+
+            <transition name="move2" appear>
+                <div id="mid2" class="middle2" v-show="aniShow" @click="toXunwutie">
+                    <div class="tu">
+                        <div class="tu2"></div>
+                    </div>
+                    <div class="zi">寻物帖</div>
                 </div>
-                <div class="zi">寻物帖</div>
-            </div>
+            </transition>
+            
             <div class="middle1"></div>
         </div>
         <div class="bottom">
-            <div class="bottom2" @click="toHome"></div>
+            <transition name="rotate" appear>
+                <div class="bottom2" v-show="aniShow" id="bigBtn" @click="toHome"></div>
+            </transition>
         </div>
     </body>
 </template>
@@ -32,7 +42,7 @@ export default {
     name: 'xinjian',
     data(){
         return{
-            
+            aniShow: true,
         }
     },
     methods:{
@@ -43,13 +53,60 @@ export default {
             this.$router.push('/CreateAsk')
         },
         toHome(){
-            this.$router.push('/Home')
+            this.aniShow = false
+            document.getElementById('root').style.opacity = 0
+            setTimeout(()=>{
+                 this.$parent.fatherMethod();
+            },1000)
         }
     },
 }
 </script>
 
 <style scoped lang="css">
+
+.move1-enter-active, .move1-leave-active {
+	transition: top 1s;
+}
+.move1-enter, .move1-leave-to {
+	top: 90% !important;
+}
+.move1-enter-to, .move1-leave {
+    top: 32%;
+}
+
+
+.move2-enter-active, .move2-leave-active {
+	transition: top 1s;
+}
+.move2-enter, .move2-leave-to {
+    top: 90% !important;
+}
+.move2-enter-to, .move2-leave {
+	top: 50%;
+}
+
+
+.rotate-enter-active, .rotate-leave-active {
+	transition: transform 1s;
+}
+.rotate-enter, .rotate-leave-to {
+	transform: rotate(0deg) !important;
+}
+.rotate-enter-to, .rotate-leave {
+	transform: rotate(90deg);
+}
+
+#mid1{
+    top: 32%;
+}
+#mid2{
+    top: 50%;
+}
+#bigBtn{
+    transform: rotate(90deg);
+}
+
 body{
     background-color: #EEEEEE;
     display: flex;
@@ -59,6 +116,8 @@ body{
     width: 100vw;
     height: 100wh;
     margin: 0px;
+    /* overflow: hidden; */
+    transition: opacity 1s;
 }
 .top1{
     background-color: white;
@@ -77,7 +136,8 @@ body{
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items:center ;
+    align-items:center;
+    overflow: hidden;
 }
 .middle1{
     height: 100px;
@@ -91,7 +151,9 @@ body{
     display: flex;
     flex-direction: row;
     align-items:center ;
+    position: absolute;
 }
+
 .zi{
     color: #4E4E4E;
     font-family: SourceHanSansCN-Medium;
