@@ -28,7 +28,7 @@ export default {
     name: 'bottom',
 	components: {
 		Create
-  	},
+	},
 	data(){
         return{
             showCreate:false,

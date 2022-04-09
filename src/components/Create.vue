@@ -56,7 +56,7 @@ export default {
             this.aniShow = false
             document.getElementById('root').style.opacity = 0
             setTimeout(()=>{
-                 this.$parent.fatherMethod();
+                    this.$parent.fatherMethod();
             },1000)
         }
     },

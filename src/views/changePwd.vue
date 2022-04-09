@@ -32,7 +32,7 @@ export default {
   methods: {
     saveFn(){
         this.$store.state.userInfo.password = this.inputVal;
-        this.$router.go(-1)
+        this.$router.go(-1);
     },
     addImage(e){
         let formdata = new FormData();

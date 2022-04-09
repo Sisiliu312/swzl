@@ -295,7 +295,7 @@ export default {
       checkedWei: true,
     };
   },
-  created() {
+  created(){
     // 页面创建时获取时间
     this.date1 = this.$moment();
     this.date2 = this.$moment().subtract(1, "days");

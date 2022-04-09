@@ -876,10 +876,10 @@ body {
 
 /* 物品颜色 */
 .menu6 {
+  height: auto;
   position: absolute;
   bottom: 0;
   z-index: 4;
-  height: auto;
   left: 0;
   right: 0;
   background-color: #edf3f2;
@@ -887,7 +887,7 @@ body {
 }
 .menu6-middle {
   width: 100%;
-  height: 200px;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
