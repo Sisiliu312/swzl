@@ -4,7 +4,7 @@
             <div>
                 <div class="return" @click="toBackView"></div>
                 <div class="header-message">用户名修改</div>
-                <div class="saveBtn" @click="saveFn">保存</div>
+                <div class="saveBtn" @click="saveFn">确定</div>
             </div>
         </div>
         <div id="mainBox">
@@ -31,7 +31,9 @@ export default {
   },
   methods: {
     saveFn(){
-        alert(this.inputVal)
+        this.$store.state.userInfo.username = this.inputVal;
+        console.log(this.$store.state.userInfo)
+        this.$router.go(-1)
     },
     addImage(e){
         let formdata = new FormData();

@@ -4,12 +4,12 @@
             <div>
                 <div class="return" @click="toBackView"></div>
                 <div class="header-message">密码修改</div>
-                <div class="saveBtn" @click="saveFn">保存</div>
+                <div class="saveBtn" @click="saveFn">确认</div>
             </div>
         </div>
         <div id="mainBox">
         	<div class="inputBarBox">
-                <input placeholder="密码修改" id="inputBar" type="text" v-model="inputVal">
+                <input placeholder="密码修改" id="inputBar" type="password" v-model="inputVal">
             </div>
         </div>
     </div>
@@ -31,7 +31,8 @@ export default {
   },
   methods: {
     saveFn(){
-        alert(this.inputVal)
+        this.$store.state.userInfo.password = this.inputVal;
+        this.$router.go(-1)
     },
     addImage(e){
         let formdata = new FormData();

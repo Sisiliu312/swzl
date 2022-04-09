@@ -179,7 +179,7 @@ export default {
     .addImg_icon{
         height: 30px;
         width: 30px;
-        background: url("../assets/shangchuanzhaopian.png") center center / 60% no-repeat;
+        background: url("../assets/imgC.png") center center / 60% no-repeat;
     }
     .smallText{
         font-size: 12px;

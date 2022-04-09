@@ -4,6 +4,7 @@
             <div>
                 <div class="return" @click="toBackView"></div>
                 <div class="header-message">个人信息更改</div>
+				<div class="saveBtn" @click="updateUser">保存</div>
             </div>
         </div>
         <div id="mainBox">
@@ -18,14 +19,14 @@
 				<div class="userOpt" @click="TouserOpt">
 					<span>用户名</span>
 					<div class="infoBox">
-						<div>啊顶顶顶</div>
+						<div>{{user.username}}</div>
 						<div class="arry_icon"></div>
 					</div>
 				</div>
 				<div class="pwdOpt" @click="TopwdOpt">
 					<span>密码修改</span>
 					<div class="infoBox">
-						<div>啊顶顶顶</div>
+						<div>{{user.password}}</div>
 						<div class="arry_icon"></div>
 					</div>
 				</div>
@@ -35,6 +36,7 @@
 </template>
 
 <script>
+import { upload } from "@/api/upload.js";
 import { updateUserInfo } from "@/api/user";
 export default {
   data() {
@@ -47,14 +49,33 @@ export default {
       },
     };
   },
+  computed: {
+    // store里的状态
+    userInfo_vuex() {
+      return this.$store.state.userInfo;
+    },
+    
+  },
+  watch: {
+	  userInfo_vuex(){
+		//   同步至当前显示
+		this.user = this.$store.state.userInfo;
+	  }
+  },
   methods: {
     addImage(e){
+		let judge = this.beforeAvatarUpload(e.target.files)
+		// if(!judge) return;
+		// 上传
         let formdata = new FormData();
         Array.from(e.target.files).map((item) => {
             formdata.append("file", item);
         });
         upload(formdata).then((res) => {
-            this.imgList.push(res.data)
+			// 更换
+            this.user.avatar = res.data
+			// 保存至vuex
+			this.$store.state.userInfo.avatar = this.user.avatar
         });
     },
 	toBackView() {
@@ -70,9 +91,9 @@ export default {
 
 
     // 头像上传成功返回地址
-    handleAvatarSuccess(res, file) {
-      this.user.avatar = file.response;
-    },
+    // handleAvatarSuccess(res, file) {
+    //   this.user.avatar = file.response;
+    // },
     // 更新头像前检查图片
     beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";
@@ -119,6 +140,10 @@ export default {
     this.user.username = this.$store.state.userInfo.username;
     this.user.token=this.$store.state.userInfo.token
   },
+  beforeDestroy(){
+	//   关闭前删除pwd
+	this.$store.state.userInfo.password = '';
+  }
 };
 </script>
 
@@ -245,5 +270,11 @@ export default {
         font-size: 1.3rem;
         color: rgb(108, 176, 154);
         font-family: SourceHanSansCN-Bold;
+    }
+	.saveBtn{
+        position: absolute;
+        right: 12px;
+        font-size: 13px;
+        color: rgb(114, 174, 153);
     }
 </style>
