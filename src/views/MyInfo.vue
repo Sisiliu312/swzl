@@ -357,4 +357,7 @@ body {
   font-size: 1.1rem;
   border-top: #8b9996 1px solid;
 }
+.el-button{
+  margin:0px 10px;
+}
 </style>

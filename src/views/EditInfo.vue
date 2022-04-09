@@ -100,15 +100,17 @@ export default {
     // },
     // 更新头像前检查图片
     beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/jpeg";
-      const isLt2M = file.size / 1024 / 1024 < 2;
-      if (!isJPG) {
-        this.$message.error("上传头像图片只能是 JPG 格式!");
-      }
-      if (!isLt2M) {
-        this.$message.error("上传头像图片大小不能超过 2MB!");
-      }
-      return isJPG && isLt2M;
+      // const isJPG = file.type === "image/jpeg";
+      // console.log(file)
+      
+      // if (!isJPG) {
+      //   this.$message.error("上传头像图片只能是 JPG 格式!");
+      // }
+      // const isLt2M = file.size / 1024 / 1024 < 10;
+      // if (!isLt2M) {
+      //   this.$message.error("上传头像图片大小不能超过 10MB!");
+      // }
+      return true;
     },
     // 更新用户按钮
     updateUser() {
