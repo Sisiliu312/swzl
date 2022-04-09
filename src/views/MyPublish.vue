@@ -122,7 +122,7 @@
         <div v-bind:class="isBox01 ? 'box01' : 'box02'">
           <div v-bind:class="isTu1 ? 'tu' : 'tuchange'">
             <div class="tu01">
-              <img src="" />
+              <img :src="ask.avatar" />
             </div>
           </div>
           <div class="wen1">
@@ -153,6 +153,7 @@ export default {
       this.posts = res.data.data;
     });
     getAskByUser(this.$store.state.userInfo.id).then((res) => {
+      console.log(res.data.data)
       this.asks = res.data.data;
     });
   },
