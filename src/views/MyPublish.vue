@@ -350,8 +350,8 @@ svg {
   z-index: 4;
 }
 .tu {
-  width: 100px;
-  height: 100px;
+  width: calc(15vh - 24px);
+  height: calc(15vh - 24px);
   background-color: rgb(244, 244, 244, 244);
   border-radius: 10px;
 }
@@ -364,9 +364,13 @@ svg {
   /* background: url("../assets/beishouji.png"); */
   background-size: 100% 100%;
   margin: auto;
-  margin-top: 13px;
-  width: 50px;
-  height: 50px;
+  /* margin-top: 13px; */
+  width: 100%;
+  height: 100%;
+}
+.tu01>img{
+  height: 100%;
+  width: 100%;
 }
 .tu02 {
   background: url("../assets/weishenghuoyongpin.png");
