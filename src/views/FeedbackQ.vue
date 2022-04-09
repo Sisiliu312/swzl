@@ -65,6 +65,20 @@ export default {
             });
             this.$router.go(-1)
         });
+            sendMail(this.content).then((res) => {
+                this.$message({
+                    type: "success",
+                    message: `反馈成功`,
+                });
+                this.$router.go(-1)
+                })
+                .catch((res) => {
+                this.$message({
+                    type: "success",
+                    message: `反馈失败`,
+                });
+                this.$router.go(-1)
+            });
         },
         addImage(e){
             console.log(e.target.files)

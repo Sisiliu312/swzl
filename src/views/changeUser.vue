@@ -153,6 +153,7 @@ export default {
     }
     #header{
         background-color: white;
+        padding: 0 20px;
         padding-top: 24px;
         position: relative;
 
@@ -161,6 +162,9 @@ export default {
         width: 100%;
         height: 30px;
         padding: 10px 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
     #mainBox{
         flex: 1;
@@ -177,13 +181,13 @@ export default {
         height: 30px;
         width: 30px;
         background: url("../assets/lvsejiantou.png") center center / 38% no-repeat;
-        position: absolute;
-        left: 0;
+        /* position: absolute; */
+        /* left: 0; */
     }
     .header-message {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
+        /* position: absolute; */
+        /* left: 50%; */
+        /* transform: translateX(-50%); */
 
         font-weight: Bold;
         font-size: 1.3rem;
@@ -191,8 +195,8 @@ export default {
         font-family: SourceHanSansCN-Bold;
     }
     .saveBtn{
-        position: absolute;
-        right: 12px;
+        /* position: absolute; */
+        /* right: 12px; */
         font-size: 13px;
         color: rgb(114, 174, 153);
     }
