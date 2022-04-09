@@ -49,6 +49,9 @@ export default {
             this.$router.go(-1)
         },
         sendFeedBack() {
+<<<<<<< HEAD
+            alert(this.content + '  此处写接口')
+=======
             sendMail(this.content)
         .then((res) => {
           this.$message({
@@ -64,6 +67,7 @@ export default {
           });
           this.$router.go(-1)
         });
+>>>>>>> 6ce53ddefc38af1badfefae2d8a867af3d97c6a6
         },
         addImage(e){
             console.log(e.target.files)

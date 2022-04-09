@@ -294,6 +294,7 @@ body {
   background-color: #eeeeee;
   height: 100%;
   width: 100%;
+  overflow: hidden;
 }
 /* 页面中心 */
 .post-list {
