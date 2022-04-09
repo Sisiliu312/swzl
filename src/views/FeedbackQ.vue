@@ -9,7 +9,7 @@
         <div id="mainBox">
             <div class="feedbackBox">
                 <div class="textInput">
-                    <textarea maxlength="500" v-model="textVal" placeholder="期待你的建议和反馈"></textarea>
+                    <textarea maxlength="500" v-model="content" placeholder="期待你的建议和反馈"></textarea>
                 </div>
                 <div class="imgBox">
                     <div class="imgContainer" v-for="(src,index) in imgList" :key="src">
@@ -22,7 +22,7 @@
                         <div class="addImg_icon">
                             <input class="tu5" type="file" name="file" @change="addImage" />
                         </div>
-                        <div class="smallText">{{textVal.length}}/500</div>
+                        <div class="smallText">{{content.length}}/500</div>
                     </div>
                     <div class="button" @click="sendFeedBack">
                         发送
@@ -35,11 +35,12 @@
 
 <script>
 import { upload } from "@/api/upload.js";
+import { sendMail } from "@/api/mail.js";
 export default {
     name: 'FeedbackQ',
     data(){
         return{
-            textVal:'',
+            content:'',
             imgList:[],
         }
     },
@@ -48,7 +49,21 @@ export default {
             this.$router.go(-1)
         },
         sendFeedBack() {
-            alert(this.textVal + '  此处写接口')
+            sendMail(this.content)
+        .then((res) => {
+          this.$message({
+            type: "success",
+            message: `反馈成功`,
+          });
+          this.$router.go(-1)
+        })
+        .catch((res) => {
+          this.$message({
+            type: "success",
+            message: `反馈成功`,
+          });
+          this.$router.go(-1)
+        });
         },
         addImage(e){
             console.log(e.target.files)

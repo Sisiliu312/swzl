@@ -4,6 +4,16 @@
 
     <div class="post-list">
       <div class="infinite-list-wrapper" style="overflow: auto">
+        <!-- 页面找不到 -->
+        <div class="page2" v-show="this.posts.length == 0">
+          <div class="page2-img"></div>
+          <div class="page2-item1">很遗憾没有找到相关物品，</div>
+          <div class="page2-item2">
+            <div class="item2-word">建议更换关键词或发布</div>
+            <div class="item2-button" @click="toXunwutie">寻物帖</div>
+          </div>
+        </div>
+
         <ul
           class="list"
           v-infinite-scroll="load"
@@ -15,7 +25,10 @@
               <div class="png">
                 <!-- 物品图 -->
                 <div class="picture">
-                  <img :src="post.images" style="height: 100px; width: 100px; broder-radius: 15px;" />
+                  <img
+                    :src="post.images"
+                    style="height: 100px; width: 100px; broder-radius: 15px"
+                  />
                 </div>
                 <!-- 校区图 -->
                 <svg
@@ -82,17 +95,6 @@
         <!-- <p v-if="noMore" class="nomore">没有更多啦</p> -->
       </div>
     </div>
-
-    <!-- 页面找不到 -->
-  <div class="page2" v-show="isPage2">
-    <div class="page2-img"></div>
-    <div class="page2-item1">很遗憾没有找到相关物品，</div>
-    <div class="page2-item2">
-      <div class="item2-word">建议更换关键词或发布</div>
-      <div class="item2-button" @click="toXunwutie">寻物帖</div>
-    </div>
-  </div>
-
     <Bottom />
   </body>
 </template>
@@ -115,7 +117,7 @@ export default {
   data() {
     return {
       // 页面找不到
-      isPage2:false,
+      isPage2: false,
       posts: [
         // {
         //   id: Number,
@@ -155,20 +157,17 @@ export default {
   watch: {
     // 监听所选校区 种类 日期有无变化
     campus() {
-      this.pages= 1,
-      this.currentPage = 1;
+      (this.pages = 1), (this.currentPage = 1);
       this.posts = [];
       this.getPostByCampus(this.$store.state.campus, this.currentPage);
     },
     categoryId() {
-      this.pages= 1,
-      this.currentPage = 1;
+      (this.pages = 1), (this.currentPage = 1);
       this.posts = [];
       this.getPostByCategory(this.$store.state.categoryId, this.currentPage);
     },
     date() {
-      this.pages= 1,
-      this.currentPage = 1;
+      (this.pages = 1), (this.currentPage = 1);
       this.posts = [];
       this.getPostByDate(this.$store.state.date, this.currentPage);
     },
@@ -177,23 +176,31 @@ export default {
     this.getPosts(this.currentPage);
   },
   methods: {
-    toXunwutie:function(){
-      this.$router.push('/Xunwutie')
+    toXunwutie: function () {
+      this.$router.push("/Xunwutie");
     },
     // 触发加载
     load() {
       this.loading = true;
       setTimeout(() => {
-        if(this.$store.state.campus===0||this.$store.state.campus===1){
-            this.getPostByCampus(this.$store.state.campus, this.currentPage+1);
+        if (this.$store.state.campus === 0 || this.$store.state.campus === 1) {
+          this.getPostByCampus(this.$store.state.campus, this.currentPage + 1);
         }
-        if(this.$store.state.categoryId!=''){
-          this.getPostByCategory(this.$store.state.categoryId, this.currentPage+1);
+        if (this.$store.state.categoryId != "") {
+          this.getPostByCategory(
+            this.$store.state.categoryId,
+            this.currentPage + 1
+          );
         }
-        if(this.$store.state.date!=''){
-          this.getPostByDate(this.$store.state.date, this.currentPage+1);
+        if (this.$store.state.date != "") {
+          this.getPostByDate(this.$store.state.date, this.currentPage + 1);
         }
-        if(!(this.$store.state.campus===0)&&!(this.$store.state.campus===1)&&this.$store.state.categoryId==''&&this.$store.state.date==''){
+        if (
+          !(this.$store.state.campus === 0) &&
+          !(this.$store.state.campus === 1) &&
+          this.$store.state.categoryId == "" &&
+          this.$store.state.date == ""
+        ) {
           this.getPosts(this.currentPage + 1);
         }
         this.loading = false;
@@ -204,17 +211,18 @@ export default {
       getPosts(pages)
         .then((res) => {
           let pageInfo = res.data.data;
-          console.log(pageInfo)
-          pageInfo.records.forEach((item) => {
-            this.posts.push(item);
-          });
-          for (let i = 0; i < this.posts.length; i++) {
-            var temp = this.posts[i].tags + "";
-            this.posts[i].tag = temp.split(" ");
+          if (pageInfo != null) {
+            pageInfo.records.forEach((item) => {
+              this.posts.push(item);
+            });
+            for (let i = 0; i < this.posts.length; i++) {
+              var temp = this.posts[i].tags + "";
+              this.posts[i].tag = temp.split(" ");
+            }
+            this.currentPage = pageInfo.current;
+            this.pages = pageInfo.pages;
+            this.loading = false;
           }
-          this.currentPage = pageInfo.current;
-          this.pages = pageInfo.pages;
-          this.loading = false;
         })
         .catch((err) => {
           console.log(err);
@@ -228,46 +236,52 @@ export default {
     getPostByCampus(campus, currentPage) {
       getPostByCampus(campus, currentPage).then((res) => {
         let pageInfo = res.data.data;
-        pageInfo.records.forEach((item) => {
-          this.posts.push(item);
-        });
-        for (let i = 0; i < this.posts.length; i++) {
-          var temp = this.posts[i].tags + "";
-          this.posts[i].tag = temp.split(" ");
+        if (pageInfo != null) {
+          pageInfo.records.forEach((item) => {
+            this.posts.push(item);
+          });
+          for (let i = 0; i < this.posts.length; i++) {
+            var temp = this.posts[i].tags + "";
+            this.posts[i].tag = temp.split(" ");
+          }
+          this.currentPage = pageInfo.current;
+          this.pages = pageInfo.pages;
+          this.loading = false;
         }
-        this.currentPage = pageInfo.current;
-        this.pages = pageInfo.pages;
-        this.loading = false;
       });
     },
     getPostByCategory(categoryId, currentPage) {
       getPostByCategory(categoryId, currentPage).then((res) => {
         let pageInfo = res.data.data;
-        pageInfo.records.forEach((item) => {
-          this.posts.push(item);
-        });
-        for (let i = 0; i < this.posts.length; i++) {
-          var temp = this.posts[i].tags + "";
-          this.posts[i].tag = temp.split(" ");
+        if (pageInfo != null) {
+          pageInfo.records.forEach((item) => {
+            this.posts.push(item);
+          });
+          for (let i = 0; i < this.posts.length; i++) {
+            var temp = this.posts[i].tags + "";
+            this.posts[i].tag = temp.split(" ");
+          }
+          this.currentPage = pageInfo.current;
+          this.pages = pageInfo.pages;
+          this.loading = false;
         }
-        this.currentPage = pageInfo.current;
-        this.pages = pageInfo.pages;
-        this.loading = false;
       });
     },
     getPostByDate(date, currentPage) {
       getPostByDate(date, currentPage).then((res) => {
         let pageInfo = res.data.data;
-        pageInfo.records.forEach((item) => {
-          this.posts.push(item);
-        });
-        for (let i = 0; i < this.posts.length; i++) {
-          var temp = this.posts[i].tags + "";
-          this.posts[i].tag = temp.split(" ");
+        if (pageInfo != null) {
+          pageInfo.records.forEach((item) => {
+            this.posts.push(item);
+          });
+          for (let i = 0; i < this.posts.length; i++) {
+            var temp = this.posts[i].tags + "";
+            this.posts[i].tag = temp.split(" ");
+          }
+          this.currentPage = pageInfo.current;
+          this.pages = pageInfo.pages;
+          this.loading = false;
         }
-        this.currentPage = pageInfo.current;
-        this.pages = pageInfo.pages;
-        this.loading = false;
       });
     },
   },
@@ -277,7 +291,7 @@ export default {
 <style lang="css" scoped>
 body {
   margin: 0px;
-  background-color: #EEEEEE;
+  background-color: #eeeeee;
   height: 100%;
   width: 100%;
 }
@@ -292,25 +306,25 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #EEEEEE;
+  background-color: #eeeeee;
 }
 /* 滚动加载组件 */
 .infinite-list-wrapper {
   margin-top: 0px;
   width: 100%;
   height: 800px;
-  background-color: rgb(244, 244,244,244);
+  background-color: rgb(244, 244, 244, 244);
 }
 .list {
   width: 100vw;
   height: 100vh;
   margin: 0px;
-  padding:70px 0px 0px 0px;
-  background: rgb(244, 244,244,244);
+  padding: 70px 0px 0px 0px;
+  background: rgb(244, 244, 244, 244);
 }
 .list li {
-  margin:25px;
-  background: #EEEEEE;
+  margin: 25px;
+  background: #eeeeee;
   list-style-type: none;
 }
 .infinite-list-wrapper p {
@@ -332,18 +346,18 @@ body {
   display: flex;
   width: 180px;
   height: 25px;
-  margin: 15px 5px 10px 5px ;
-  overflow-x:scroll;
-  white-space:nowrap;
+  margin: 15px 5px 10px 5px;
+  overflow-x: scroll;
+  white-space: nowrap;
 }
 /* 物品图 */
-.picture{
+.picture {
   height: 120px;
   width: 110px;
-  margin:18px 0px 18px 18px;
+  margin: 18px 0px 18px 18px;
 }
 /* 校区图 */
-.icon{
+.icon {
   position: relative;
   top: -143px;
   top: -161px;
@@ -358,7 +372,7 @@ body {
   box-sizing: border-box;
   padding: 4px 10px;
   background-color: #5897aa;
-  margin:0px 3px;
+  margin: 0px 3px;
   /* overflow-x:scroll; */
 }
 .content .tag .category-name {
@@ -370,35 +384,35 @@ body {
   box-sizing: border-box;
   padding: 4px 10px;
   background-color: #5897aa;
-  margin:0px 3px;
+  margin: 0px 3px;
   /* overflow-x:scroll; */
 }
-.find-time{
+.find-time {
   height: 25px;
   width: 180px;
-  margin:10px 10px 5px 5px;
-  margin:20px 10px 10px 0px;
+  margin: 10px 10px 5px 5px;
+  margin: 20px 10px 10px 0px;
   font-size: 1rem;
   font-weight: medium;
-  color: #6C6D6D;
-  overflow-x:scroll;
-  white-space:nowrap;
+  color: #6c6d6d;
+  overflow-x: scroll;
+  white-space: nowrap;
 }
-.find-place{
+.find-place {
   height: 25px;
   width: 180px;
-  margin:0px 10px 10px 5px;
-  margin:10px 10px 10px 0px;
+  margin: 0px 10px 10px 5px;
+  margin: 10px 10px 10px 0px;
   font-size: 1rem;
   font-weight: medium;
-  color: #6C6D6D;
-  overflow-x:scroll;
-  white-space:nowrap;
+  color: #6c6d6d;
+  overflow-x: scroll;
+  white-space: nowrap;
 }
-.nomore{
+.nomore {
   position: fixed;
-  bottom:0px;
-  margin:auto;
+  bottom: 0px;
+  margin: auto;
 }
 .more {
   position: relative;
@@ -411,35 +425,35 @@ body {
 }
 
 /* 页面找不到 */
-.page2{
+.page2 {
   height: 100vh;
-  padding:0 6%;
+  padding: 0 6%;
   padding-top: 160px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.page2-img{
+.page2-img {
   height: 200px;
   width: 200px;
   background: url("../assets/yemianzhaobudao.png");
   background-size: 100% 100%;
 }
-.page2-item1{
+.page2-item1 {
   font-size: 0.9rem;
   font-weight: bold;
-  color: #6C6C6C;
+  color: #6c6c6c;
 }
-.page2-item2{
+.page2-item2 {
   display: flex;
 }
-.item2-word{
+.item2-word {
   font-size: 0.9rem;
   font-weight: bold;
-  color: #6C6C6C;
+  color: #6c6c6c;
   padding-top: 20px;
 }
-.item2-button{
+.item2-button {
   margin: 15px 6px;
   padding: 6px 10px;
   border: 1.5px #589788 solid;
