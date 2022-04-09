@@ -75,7 +75,7 @@
               :style="{
                 backgroundColor: `${time_choice == 7 ? 'rgb(88,151,136)' : ''}`,
               }"
-              @click="timeClick(7)"
+              @click="timeClick(7,7)"
             >
               <span
                 :style="{ color: `${time_choice == 7 ? 'white' : 'black'}` }"
@@ -84,8 +84,8 @@
             </div>
             <div
               class="other_time"
-              :style="{ borderLeft: `solid ${date6 == 1 ? 1 : 0}px black` }"
-              @click="timeClick(date6)"
+              :style="{ borderLeft: `solid ${date6.toString().split(' ')[2] == '01' ? 1 : 0}px black` }"
+              @click="timeClick(date6,6)"
             >
               <div
                 :style="{
@@ -110,8 +110,8 @@
             </div>
             <div
               class="other_time"
-              :style="{ borderLeft: `solid ${date5 == 1 ? 1 : 0}px black` }"
-              @click="timeClick(date5)"
+              :style="{ borderLeft: `solid ${date5.toString().split(' ')[2] == '01' ? 1 : 0}px black` }"
+              @click="timeClick(date5,5)"
             >
               <div
                 :style="{
@@ -136,8 +136,8 @@
             </div>
             <div
               class="other_time"
-              :style="{ borderLeft: `solid ${date4 == 1 ? 1 : 0}px black` }"
-              @click="timeClick(date4)"
+              :style="{ borderLeft: `solid ${date4.toString().split(' ')[2] == '01' ? 1 : 0}px black` }"
+              @click="timeClick(date4,4)"
             >
               <div
                 :style="{
@@ -162,8 +162,8 @@
             </div>
             <div
               class="other_time"
-              :style="{ borderLeft: `solid ${date3 == 1 ? 1 : 0}px black` }"
-              @click="timeClick(date3)"
+              :style="{ borderLeft: `solid ${date3.toString().split(' ')[2] == '01' ? 1 : 0}px black` }"
+              @click="timeClick(date3,3)"
             >
               <div
                 :style="{
@@ -188,8 +188,8 @@
             </div>
             <div
               class="other_time"
-              :style="{ borderLeft: `solid ${date2 == 1 ? 1 : 0}px black` }"
-              @click="timeClick(date2)"
+              :style="{ borderLeft: `solid ${date2.toString().split(' ')[2] == '01' ? 1 : 0}px black` }"
+              @click="timeClick(date2,2)"
             >
               <div
                 :style="{
@@ -214,8 +214,8 @@
             </div>
             <div
               class="other_time"
-              :style="{ borderLeft: `solid ${date1 == 1 ? 1 : 0}px black` }"
-              @click="timeClick(date1)"
+              :style="{ borderLeft: `solid ${date1.toString().split(' ')[2] == '01' ? 1 : 0}px black` }"
+              @click="timeClick(date1,1)"
             >
               <div
                 :style="{
@@ -313,8 +313,8 @@ export default {
   },
   methods: {
     // 更换日期
-    timeClick(date) {
-      this.time_choice = this.which;
+    timeClick(date,which) {
+      this.time_choice = which;
       if (date === 7) {
         this.$store.commit("SET_DATE", "before");
       } else {
