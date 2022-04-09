@@ -80,7 +80,7 @@
           <div class="brandcolor">
               <!-- 点击后出现标签详情 -->
               <div class="zi311" @click="toShowTagContent(selectedTag)">
-                请选择标签{{ selectedTag }}
+                请选择{{ selectedTag }}
               </div>
               <!-- 选择后改变 -->
               <div class="choseAfter" v-show="chose2After">
@@ -521,7 +521,7 @@ body {
 .brandcolor{
   height: 100px;
   width: 100%;
-  margin:0px 0px 0px 30px;
+  margin:10px 0px 0px 30px;
   display: flex;
 }
 .tu2 {

@@ -50,7 +50,8 @@
       <!-- 详细信息 -->
       <div class="detail-message">
         <div class="zi2">详细特征</div>
-        <div class="basic-box">
+        <div class="basic-box0">
+          <div class="chosebrand">
           <div class="tu6"></div>
 
           <el-select v-model="selectedTag" placeholder="请选择标签">
@@ -62,9 +63,10 @@
             >
             </el-option>
           </el-select>
+          </div>
 
           <!-- 点击后出现标签详情 -->
-
+          <div class="brandcolor">
           <div class="zi3" @click="toShowTagContent(selectedTag)">
             请选择{{ selectedTag }}
           </div>
@@ -73,6 +75,7 @@
           <div class="choseAfter" v-show="chose2After">
             <div class="choseAfter1">{{ this.ask.tags }}</div>
             <div class="choseAgain" @click="resetTag">(点击重置标签)</div>
+          </div>
           </div>
         </div>
       </div>
@@ -293,6 +296,7 @@ export default {
       this.showCategoryOne = false;
     },
     notShow: function () {
+      this.showCategoryOne=false;
       this.showCategoryTwo = false;
       this.isShow4 = false;
       this.isShow5 = false;
@@ -765,10 +769,10 @@ body {
 }
 /* 菜单1*/
 .menu1 {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   z-index: 4;
-  height: 65%;
+  height: auto;
   width: 100%;
   background-color: #edf3f2;
   border-radius: 20px 20px 0px 0px;
@@ -797,6 +801,7 @@ body {
 }
 
 .menu1-bottom {
+  height: 40px;
   margin-top: 20px;
   margin-left: 80%;
   color: #17a697;
@@ -832,10 +837,10 @@ body {
 }
 /* 卡或证件 */
 .menu3 {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   z-index: 4;
-  height: 43%;
+  height: auto;
   width: 100%;
   background-color: #edf3f2;
   border-radius: 20px 20px 0px 0px;
@@ -843,7 +848,7 @@ body {
 
 /* 电子产品 */
 .menu2 {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   z-index: 4;
   height: 55%;
@@ -853,6 +858,7 @@ body {
 }
 
 .menu2-bottom {
+  height: 40px;
   margin-top: 20px;
   font-weight: medium;
   display: flex;
@@ -870,10 +876,10 @@ body {
 
 /* 物品颜色 */
 .menu6 {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   z-index: 4;
-  height: 50%;
+  height: auto;
   left: 0;
   right: 0;
   background-color: #edf3f2;
@@ -888,4 +894,22 @@ body {
   align-items: center;
 }
 
+.basic-box0{
+  height: 80px;
+  width: 100%;
+  display: flex;
+  flex-direction:column;
+  margin: 3px;
+}
+.chosebrand{
+  height: 100px;
+  width: 100%;
+  display: flex;
+}
+.brandcolor{
+  height: 100px;
+  width: 100%;
+  display: flex;
+  margin:10px 0px 0px 30px;
+}
 </style>

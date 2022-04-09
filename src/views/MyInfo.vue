@@ -310,9 +310,9 @@ body {
   border-radius: 15px;
   position: absolute;
   z-index: 5;
-  height: 85%;
+  height: 65%;
   width: 80%;
-  margin: 40px 35px;
+  margin:35% 35px;
   background-color: #e6edeb;
 }
 .sysm-top {
