@@ -152,6 +152,7 @@ body {
   display: flex;
   flex-direction: column;
   background: rgb(246, 243, 243);
+  overflow: scroll;
 }
 .top2 {
   background-color: white;
@@ -358,6 +359,6 @@ body {
   border-top: #8b9996 1px solid;
 }
 .el-button{
-  margin:0px 10px;
+  margin:0px 10px 80px 10px;
 }
 </style>

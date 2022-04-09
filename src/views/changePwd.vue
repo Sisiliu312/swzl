@@ -8,7 +8,7 @@
             </div>
         </div>
         <div id="mainBox">
-        	<div class="inputBarBox">
+            <div class="inputBarBox">
                 <input placeholder="密码修改" id="inputBar" type="password" v-model="inputVal">
             </div>
         </div>
