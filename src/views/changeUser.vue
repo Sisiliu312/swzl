@@ -31,8 +31,8 @@ export default {
   },
   methods: {
     saveFn(){
-        this.$store.state.userInfo.username = this.inputVal;
-        console.log(this.$store.state.userInfo)
+        this.$store.state.userInfo.username_temp = this.inputVal;
+        // console.log(this.$store.state.userInfo)
         this.$router.go(-1)
     },
     addImage(e){

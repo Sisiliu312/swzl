@@ -19,7 +19,7 @@
 				<div class="userOpt" @click="TouserOpt">
 					<span>用户名</span>
 					<div class="infoBox">
-						<div>{{user.username}}</div>
+						<div>{{user.username_temp?user.username_temp:user.username}}</div>
 						<div class="arry_icon"></div>
 					</div>
 				</div>
@@ -59,10 +59,14 @@ export default {
   watch: {
 	  userInfo_vuex(){
 		//   同步至当前显示
+    // alert(this.$store.state.userInfo.password)
 		this.user = this.$store.state.userInfo;
 	  }
   },
   methods: {
+    refreshData(){
+      alert(9898)
+    },
     addImage(e){
 		let judge = this.beforeAvatarUpload(e.target.files)
 		// if(!judge) return;
@@ -74,8 +78,8 @@ export default {
         upload(formdata).then((res) => {
 			// 更换
             this.user.avatar = res.data
-			// 保存至vuex
-			this.$store.state.userInfo.avatar = this.user.avatar
+			// // 保存至vuex
+			// this.$store.state.userInfo.avatar = this.user.avatar
         });
     },
 	toBackView() {
@@ -108,6 +112,13 @@ export default {
     },
     // 更新用户按钮
     updateUser() {
+      if(this.$store.state.userInfo.username_temp){
+          this.user.username = this.$store.state.userInfo.username_temp;
+      }
+      if(this.$store.state.userInfo.password){
+        this.user.password = this.$store.state.userInfo.password;
+      }
+      
       //请求后端更新请求
       updateUserInfo(this.user).then((res) => {
         if (res.data.state === 200) {
