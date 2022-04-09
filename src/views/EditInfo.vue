@@ -64,9 +64,6 @@ export default {
 	  }
   },
   methods: {
-    refreshData(){
-      alert(9898)
-    },
     addImage(e){
 		let judge = this.beforeAvatarUpload(e.target.files)
 		// if(!judge) return;
